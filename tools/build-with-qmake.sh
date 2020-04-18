@@ -36,12 +36,12 @@ echo "$QT_BEINERI_VERSION";
 # Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
 if [ -z "$QT_BEINERI_VERSION" ]; then 
     echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to call this script in your travis.yml file to use from beineri repo, qt512${NC}";
-    QT_BEINERI_VERSION="5.14";
+    QT_BEINERI_VERSION="514";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # QTV You can set this in your Environment, so do not overwrite it
 if [ -z "${QTV}" ]; then
-    declare QTV; QTV="qt${QT_BEINERI_VERSION//.}";
+    declare -x QTV; QTV="$QT_BEINERI_VERSION";
 fi
 # Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
 if [ -z "${GITHUB_TOKEN}" ]; then
@@ -63,11 +63,6 @@ if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
     declare GITHUB_PROJECT;
     GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
-fi
-# QT_WASM_VER Qt WASM Version
-if [ -z "${QT_WASM_VER}" ]; then
-    declare QT_WASM_VER; QT_WASM_VER="5.13_latest";
-    echo -e "${WARNING_COLOR}Add QT_WASM_VER to your Travis Settings Environment Variable with the version of Qt WASM, 5.13_latest${NC}";
 fi
 # Qt Installer Framework Package Folder
 if [ -z "${QIF_PACKAGE_URI}" ]; then
