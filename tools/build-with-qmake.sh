@@ -43,28 +43,20 @@ if [ -z "${GITHUB_EMAIL}" ]; then
     echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
     exit 1;
 fi
-# TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
-if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
-    OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
-    export GITHUB_USERNAME="${repo_parts[0]}";  export GITHUB_PROJECT="${repo_parts[1]}";
-fi
 # If not defined it will use this as a default
 if [ -z "${BIN_PRO_RES_NAME}" ]; then
-    if [ "${USE_CAP_DASH}" -eq 1 ]; then
-        OLD_IFS="$IFS"; IFS='-'; read -ra bin_parts <<< "$GITHUB_PROJECT"; IFS="$OLD_IFS";
-        for i in "${bin_parts[@]}"; do
-            if [ -n "${BIN_PRO_RES_NAME}" ]; then BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}-"; fi
-            BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}${i^}";
-        done
-    else
-        BIN_PRO_RES_NAME="${GITHUB_PROJECT}";
-    fi
     echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+    exit 1;
 fi
 # Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
 if [ -z "$QT_BEINERI_VERSION" ]; then 
     echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
     exit 1;
+fi
+# TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
+if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
+    OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
+    export GITHUB_USERNAME="${repo_parts[0]}";  export GITHUB_PROJECT="${repo_parts[1]}";
 fi
 #
 if [ -z "${QTV}" ]; then
@@ -80,6 +72,7 @@ if [ -z "${QTV}" ]; then
         ;;
     esac
     echo -e "${WARNING_COLOR}Add QTV to your Travis Settings Environment Variable with the version of Qt you want to use from beineri repo, qt512${NC}";
+    exit 1;
 fi
 # QT_WASM_VER Qt WASM Version
 if [ -z "${QT_WASM_VER}" ]; then

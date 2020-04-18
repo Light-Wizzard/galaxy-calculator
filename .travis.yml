@@ -44,16 +44,8 @@ jobs:
 before_install:
     # If not defined it will use this as a default
   - if [ -z "${BIN_PRO_RES_NAME}" ]; then
-        if [ "${USE_CAP_DASH}" -eq 1 ]; then
-            OLD_IFS="$IFS"; IFS='-'; read -ra bin_parts <<< "$GITHUB_PROJECT"; IFS="$OLD_IFS";
-            for i in "${bin_parts[@]}"; do
-                if [ -n "${BIN_PRO_RES_NAME}" ]; then BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}-"; fi
-                BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}${i^}";
-            done
-        else
-            BIN_PRO_RES_NAME="${GITHUB_PROJECT}";
-        fi
         echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+        exit 1;
     fi
 
 install:
