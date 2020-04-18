@@ -29,10 +29,11 @@ if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 set -e;
 #
 # Terminal Color Codes
-export WARNING_COLOR='\e[33m';
-export NC='\033[0m';
-export QT_BEINERI_VERSION="$1";
- Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
+declare WARNING_COLOR='\e[33m';
+declare NC='\033[0m';
+declare QT_BEINERI_VERSION; QT_BEINERI_VERSION="$1";
+echo "$QT_BEINERI_VERSION";
+# Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
 if [ -z "${GITHUB_TOKEN}" ]; then
     echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
