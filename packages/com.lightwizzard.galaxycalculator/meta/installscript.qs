@@ -25,12 +25,12 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
+// Component
 function Component()
 {
     // default constructor
 }
-
+// createOperations
 Component.prototype.createOperations = function()
 {
     // call default implementation to actually install GalaxyCalculator.exe!
@@ -42,7 +42,7 @@ Component.prototype.createOperations = function()
             "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll",
             "iconId=2", "description=Galaxy Calculator by the Light Wizzard");
     }
-    /*
+    /* ************************************************************************
         installer.value("os") === "x11"
         systemInfo.kernelTypes: linux, darwin, winnt
     */   
@@ -52,6 +52,5 @@ Component.prototype.createOperations = function()
         component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator.desktop", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@/icons\nName[en_US]=Galaxy-Calculator.desktop");
         component.addElevatedOperation("Copy", "@TargetDir@/Galaxy-Calculator.desktop", "@HomeDir@/Desktop/Galaxy-Calculator.desktop");
     }
-
-}
+} // end createOperations
 // End of File

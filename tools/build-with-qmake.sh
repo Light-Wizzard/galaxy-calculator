@@ -21,8 +21,8 @@
 # 
 # Debug Information, not always a good idea when not debugging, and thanks to the TheAssassin, this is now working.
 # These are the setting you might want to change
-declare -i DEBUGGING; DEBUGGING=0;
-declare -i USE_CAP_DASH; USE_CAP_DASH=1;
+declare -ix DEBUGGING; DEBUGGING=0;
+declare -ix USE_CAP_DASH; USE_CAP_DASH=1;
 # Below should be agnostic
 if [ "${DEBUGGING}" -eq 1 ]; then
     set -x; 
@@ -50,12 +50,10 @@ if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
 fi
 # If not defined it will use this as a default
 if [ -z "${BIN_PRO_RES_NAME}" ]; then
-    OLD_IFS="$IFS"; IFS='-'; read -ra bin_parts <<< "$GITHUB_PROJECT"; IFS="$OLD_IFS";
     if [ "${USE_CAP_DASH}" -eq 1 ]; then
+        OLD_IFS="$IFS"; IFS='-'; read -ra bin_parts <<< "$GITHUB_PROJECT"; IFS="$OLD_IFS";
         for i in "${bin_parts[@]}"; do
-            if [ -n "${BIN_PRO_RES_NAME}" ]; then
-                BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}-";
-            fi
+            if [ -n "${BIN_PRO_RES_NAME}" ]; then BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}-"; fi
             BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}${i^}";
         done
     else

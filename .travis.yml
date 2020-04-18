@@ -41,13 +41,28 @@ jobs:
         - DMG="true"
         - MATRIX_EVAL="COMPILER=clang++"
 
+before_install:
+    # If not defined it will use this as a default
+  - if [ -z "${BIN_PRO_RES_NAME}" ]; then
+        if [ "${USE_CAP_DASH}" -eq 1 ]; then
+            OLD_IFS="$IFS"; IFS='-'; read -ra bin_parts <<< "$GITHUB_PROJECT"; IFS="$OLD_IFS";
+            for i in "${bin_parts[@]}"; do
+                if [ -n "${BIN_PRO_RES_NAME}" ]; then BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}-"; fi
+                BIN_PRO_RES_NAME="${BIN_PRO_RES_NAME}${i^}";
+            done
+        else
+            BIN_PRO_RES_NAME="${GITHUB_PROJECT}";
+        fi
+        echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+    fi
+
 install:
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
         brew update > /dev/null; 
         brew install qt5; 
         chmod -R 755 /usr/local/opt/qt5/*; 
-        export QTDIR="/usr/local/opt/qt5"; export PATH="${QTDIR}/bin:$PATH"; export ARTIFACT="${BIN_PRO_RES_NAME}*.dmg"; 
+        export QTDIR="/usr/local/opt/qt5"; export PATH="${QTDIR}/bin:$PATH"; 
       fi
       
 script:
@@ -61,6 +76,7 @@ script:
         echo "Run macdeployqt";
         macdeployqt "${BIN_PRO_RES_NAME}.app/" -qmldir=../qml -dmg;
         find . | grep dmg;
+        export ARTIFACT="${BIN_PRO_RES_NAME}.dmg"; 
       fi
     - if [ -n "${WEBASM}" ]; then
         echo "Build WEBASM in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
