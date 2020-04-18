@@ -58,7 +58,7 @@ install:
       
 script:
     - eval "${MATRIX_EVAL}"
-    - if [ -n "${APPIMAGE}" ]; then bash tools/build-with-qmake.sh "$QT_BEINERI_VERSION"; fi
+    - if [ -n "${APPIMAGE}" ]; then source tools/build-with-qmake.sh "$QT_BEINERI_VERSION"; fi
     - if [ -n "${DMG}" ]; then
         echo "Build project for Mac in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
         mkdir build && cd build;
