@@ -14,7 +14,7 @@ jobs:
         apt:
           sources:
             - sourceline: ppa:ubuntu-toolchain-r/test
-            - sourceline: ppa:beineri/opt-qt-5.12.6-xenial
+            - sourceline: ppa:beineri/opt-qt-5.14.1-xenial
           packages:
             - binutils
             - g++-7
@@ -28,6 +28,7 @@ jobs:
       env:
         - APPIMAGE="true"
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - QT_BEINERI_VERSION="5.14.1";
     - os: linux
       dist: xenial
       sudo: require
@@ -40,54 +41,7 @@ jobs:
         - DMG="true"
         - MATRIX_EVAL="COMPILER=clang++"
 
-before_install:
-    - export WARNING_COLOR='\e[33m';
-    - export NC='\033[0m';
-    - if [ -z "${GITHUB_TOKEN}" ]; then
-        export GITHUB_TOKEN="${github_token}";
-        echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
-      fi
-    - if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
-        OLD_IFS="$IFS"; IFS='/'; read -a repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
-        export GITHUB_USERNAME="${repo_parts[0]}";  export GITHUB_PROJECT="${repo_parts[1]}";
-        echo -e "${WARNING_COLOR}GITHUB_USERNAME=$GITHUB_USERNAME and GITHUB_PROJECT=$GITHUB_PROJECT${NC}";
-      fi
-    - if [ -z "${GITHUB_EMAIL}" ]; then
-        echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
-      fi
-    - if [ -z "${BIN_PRO_RES_NAME}" ]; then
-        export BIN_PRO_RES_NAME="Galaxy-Calculator";
-        echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
-      fi
-    - if [ -z "${QTV}" ]; then
-        export QTV="qt512";
-        echo -e "${WARNING_COLOR}Add QTV to your Travis Settings Environment Variable with the version of Qt you want to use from beineri repo, qt512${NC}";
-      fi
-    - if [ -z "${QT_WASM_VER}" ]; then
-        export QT_WASM_VER="5.13_latest";
-        echo -e "${WARNING_COLOR}Add QT_WASM_VER to your Travis Settings Environment Variable with the version of Qt WASM, 5.13_latest${NC}";
-      fi
-    - if [ -z "${QIF_PACKAGE_DATA}" ]; then
-        echo -e "${WARNING_COLOR}Add QIF_PACKAGE_DATA to your Travis Settings Environment Variable with the URI for your Project.${NC}";
-        export QIF_PACKAGE_URI="packages/com.lightwizzard.galaxy-calculator";
-        export QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
-      fi
-    - if [ -z "${QIF_ARCHIVE}" ]; then
-        echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
-        export QIF_ARCHIVE="tools/qtinstallerframework.7z";
-      fi
-
 install:
-    - if [ -n "${APPIMAGE}" ]; then 
-        echo "Install qt libraries for Linux";
-        sudo apt-get update --yes; sudo apt-get install --yes p7zip;
-        sudo apt-get install --yes ${QTV}base ${QTV}quickcontrols ${QTV}quickcontrols2 ${QTV}graphicaleffects ${QTV}svg ${QTV}scxml ${QTV}script ${QTV}tools ${QTV}translations ${QTV}x11extras ${QTV}declarative libgl1-mesa-dev; 
-        sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
-        source /opt/qt*/bin/qt*-env.sh;
-        export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
-        export LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  export LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
-        export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
-      fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
         brew update > /dev/null; 

@@ -30,6 +30,7 @@ environment:
       PRJLIBS: VCRUNTIME140.dll MSVCP140.dll
       BIN: Galaxy-Calculator
       MY_ENV: AppVeyor
+      QIF_PACKAGE_URI: "packages\com.lightwizzard.galaxy-calculator\data"
 
 configuration:
     - release
@@ -120,7 +121,7 @@ after_build:
   - if exist C:\Qt\QtIFW-3.0.1\ (dir C:\Qt\QtIFW-3.0.1)
   - if exist C:\Qt\QtIFW-3.0.1\bin\ (dir C:\Qt\QtIFW-3.0.1\bin\)
   - if exist C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe (echo C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe exists) else (echo C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe does not exists)
-  - xcopy /s /e /f "%APPVEYOR_BUILD_FOLDER%-build\deploy" "%APPVEYOR_BUILD_FOLDER%\packages\com.lightwizzard.galaxycalculator\data"
+  - xcopy /s /e /f "%APPVEYOR_BUILD_FOLDER%-build\deploy" "%APPVEYOR_BUILD_FOLDER%\%QIF_PACKAGE_URI%"
   - C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe --offline-only -c "%APPVEYOR_BUILD_FOLDER%\config\config.xml" -p "%APPVEYOR_BUILD_FOLDER%\packages" "%BIN%-Installer.exe"
   - 7z a -tzip "%BIN%-Installer.zip" "%BIN%-Installer.exe"
   - dir /b /s *.zip

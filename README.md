@@ -20,16 +20,17 @@ I will try to make installers and executable for all supported Qt OS's, currentl
 If the badges are Green, you should be able to download the apps, if they are not, it might be that I am working on it, but it only takes a few minutes to update.
 
 This project is in work, so files might break, but source code should run if compiled on any machine.
-The Qt Installer Framework is working for Linux and Windows, but the AppImage in Linux is broken, and the Windows Installer will not download.
+
+The Qt Installer Framework is working for Linux and Windows, but Linux is still broken, in work, and the Windows Installer will not download.
+
 ## Status
 Unix: [![Travis Build Status](https://travis-ci.org/Light-Wizzard/galaxy-calculator.svg?branch=master)](https://travis-ci.org/Light-Wizzard/galaxy-calculator)
 Windows: [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/j7htumuwfx31elf6?svg=true)](https://ci.appveyor.com/project/Light-Wizzard/galaxy-calculator)
 
 ## :package: **Downloads:**
- - :penguin: [Linux Working](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-travis-x86_64.AppImage)
- - :penguin: [Linux Not working](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator.AppImage)
- - :penguin: :inbox_tray: [Linux ZSync Not working](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator.AppImage.zsync)
- - :penguin: :outbox_tray: [Linux Installer Not working](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Installer)
+ - :penguin: [Linux](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-x86_64.AppImage)
+ - :penguin: :inbox_tray: [Linux ZSync](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-x86_64.AppImage.zsync)
+ - :penguin: :outbox_tray: [Linux Installer in work](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Installer)
  - :office: [Windows](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/galaxy-calculator_release.zip)
  - :apple: [Apple](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator.dmg)
 

@@ -53,6 +53,9 @@ DISTFILES += macos/Info.plist \
   CMakeLists.txt \
   README.md \
   config/config.xml \
+  packages/com.lightwizzard.galaxy-calculator/data/README.md \
+  packages/com.lightwizzard.galaxy-calculator/meta/installscript.qs \
+  packages/com.lightwizzard.galaxy-calculator/meta/package.xml \
   qml/BigNumber.js \
   qml/BigNumberMath.js \
   qml/Calculator.qml \
