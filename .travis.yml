@@ -45,7 +45,7 @@ jobs:
         - MATRIX_EVAL="COMPILER=clang++"
 
 before_install:
-    - if [ -z "${BIN_PRO_RES_NAME}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
+    - if [ -z "${BIN_PRO_RES_NAME+x}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
 
 install:
     - if [ -n "${DMG}" ]; then 
