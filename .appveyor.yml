@@ -30,7 +30,7 @@ environment:
       PRJLIBS: VCRUNTIME140.dll MSVCP140.dll
       BIN: Galaxy-Calculator
       MY_ENV: AppVeyor
-      QIF_PACKAGE_URI: 'packages\com.lightwizzard.galaxy-calculator\data'
+      QIF_PACKAGE_URI: 'packages\com.lightwizzard.galaxycalculator\data'
 
 configuration:
     - release

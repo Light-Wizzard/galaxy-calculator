@@ -91,8 +91,7 @@ fi
 # Qt Installer Framework Package Folder
 if [ -z "${QIF_PACKAGE_URI}" ]; then
    echo -e "${WARNING_COLOR}Add QIF_PACKAGE_URI to your Travis Settings Environment Variable with the URI for your Project.${NC}";
-   export QIF_PACKAGE_URI="packages/com.lightwizzard.galaxy-calculator";
-   export QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
+   exit 1;
 fi
 # Set the data path
 if [ -z "${QIF_PACKAGE_DATA}" ]; then
