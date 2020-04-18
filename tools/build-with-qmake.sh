@@ -93,6 +93,9 @@ if [ -z "${QIF_ARCHIVE}" ]; then
     echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
     export QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
+# Set GitHub Credentials
+git config --global user.email "${GITHUB_EMAIL}";
+git config --global user.name "${GITHUB_USERNAME}";
 # 
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
 if [ "$CI" == "" ] && [ -d "/dev/shm" ]; then TEMP_BASE="/dev/shm"; else TEMP_BASE="/tmp"; fi
