@@ -21,8 +21,8 @@
 # 
 # Debug Information, not always a good idea when not debugging, and thanks to the TheAssassin, this is now working.
 # These are the setting you might want to change
-declare -ix DEBUGGING; DEBUGGING=1;
-declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;
+declare -ix DEBUGGING;         DEBUGGING=1;          # Set 1=True and 0=False
+declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;  # Set 1=True and 0=False
 # Below should be agnostic
 if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 # Exit on error
@@ -33,6 +33,16 @@ declare WARNING_COLOR='\e[33m';
 declare NC='\033[0m';
 declare QT_BEINERI_VERSION; QT_BEINERI_VERSION="$1";
 echo "$QT_BEINERI_VERSION";
+# Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
+if [ -z "$QT_BEINERI_VERSION" ]; then 
+    echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to call this script in your travis.yml file to use from beineri repo, qt512${NC}";
+    QT_BEINERI_VERSION="5.14";
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+fi
+# QTV You can set this in your Environment, so do not overwrite it
+if [ -z "${QTV}" ]; then
+    declare QTV; QTV="qt${QT_BEINERI_VERSION//.}";
+fi
 # Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
 if [ -z "${GITHUB_TOKEN}" ]; then
     echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
@@ -48,45 +58,15 @@ if [ -z "${BIN_PRO_RES_NAME}" ]; then
     echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
-# Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
-if [ -z "$QT_BEINERI_VERSION" ]; then 
-    echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
-    QT_BEINERI_VERSION="5.14.1";
-    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
 if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
-    export GITHUB_USERNAME="${repo_parts[0]}";  export GITHUB_PROJECT="${repo_parts[1]}";
-fi
-#
-if [ -z "${QTV}" ]; then
-    case "$QT_BEINERI_VERSION" in
-      "5.10"*)
-            export QTV="qt510";
-            ;;
-      "5.11"*)
-            export QTV="qt511";
-            ;;
-      "5.12"*)
-            export QTV="qt512";
-            ;;
-      "5.14"*)
-            export QTV="qt514";
-            ;;
-      "5.15"*)
-            export QTV="qt515";
-            ;;
-      *)
-        echo -n "Unknown Qt Version";
-        ;;
-    esac
-    echo -e "${WARNING_COLOR}Add QTV to your Travis Settings Environment Variable with the version of Qt you want to use from beineri repo, qt512${NC}";
-    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+    declare GITHUB_PROJECT;
+    GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
 fi
 # QT_WASM_VER Qt WASM Version
 if [ -z "${QT_WASM_VER}" ]; then
-    export QT_WASM_VER="5.13_latest";
+    declare QT_WASM_VER; QT_WASM_VER="5.13_latest";
     echo -e "${WARNING_COLOR}Add QT_WASM_VER to your Travis Settings Environment Variable with the version of Qt WASM, 5.13_latest${NC}";
 fi
 # Qt Installer Framework Package Folder
@@ -96,13 +76,13 @@ if [ -z "${QIF_PACKAGE_URI}" ]; then
 fi
 # Set the data path
 if [ -z "${QIF_PACKAGE_DATA}" ]; then
-    export QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
+    declare QIF_PACKAGE_DATA; QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
 fi
 # I downloaded the version of Qt Installer I needed, and 7ziped the bin folder
 # I put it in the tools folder, I will extract it later
 if [ -z "${QIF_ARCHIVE}" ]; then
     echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
-    export QIF_ARCHIVE="tools/qtinstallerframework.7z";
+    declare QIF_ARCHIVE; QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
 # Set GitHub Credentials
 git config --global user.email "${GITHUB_EMAIL}"  >/dev/null 2>&1;
@@ -125,9 +105,15 @@ else
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # Set our Artifacts for later
+declare -x ARTIFACT_QIF;
+declare -x LINUX_DEPLOY_APP_IMAGE_ARCH;
+declare -x ARTIFACT_APPIMAGE;
+declare -x ARTIFACT_ZSYNC;
 export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
-export LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  export LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
-export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
+export LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  
+export LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
+export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  
+export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
 #
 # building in temporary directory to keep system clean
 BUILD_DIR="$(mktemp -d -p "$TEMP_BASE" "${BIN_PRO_RES_NAME}-build-XXXXXX")";
@@ -165,9 +151,11 @@ chmod +x linuxdeploy*.AppImage;
 # 
 # AppImage update informatoin
 # Renamed -*x86_64.AppImage.zsync not sure what the * does, but if it does version numbers, I do not want it.
+declare -x UPDATE_INFORMATION;
 export UPDATE_INFORMATION="gh-releases-zsync|${GITHUB_USERNAME}|${GITHUB_PROJECT}|continuous|${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
 # 
 # make sure Qt plugin finds QML sources so it can deploy the imported files
+declare -x QML_SOURCES_PATHS;
 export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
 # 
 # QtQuickApp does support "make install", but we don't use it because we want to show the manual packaging approach in this example

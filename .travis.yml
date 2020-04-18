@@ -28,7 +28,7 @@ jobs:
       env:
         - APPIMAGE="true"
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-        - QT_BEINERI_VERSION="5.14.1";
+        - QT_BEINERI_VERSION="5.14";
     - os: linux
       dist: xenial
       sudo: require
