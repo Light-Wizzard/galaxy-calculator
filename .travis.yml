@@ -43,7 +43,7 @@ jobs:
 
 before_install:
     # If not defined it will use this as a default
-    #- if [ -z "${BIN_PRO_RES_NAME}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
+    - if [ -z "${BIN_PRO_RES_NAME}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
 
 install:
     - if [ -n "${DMG}" ]; then 
@@ -56,7 +56,7 @@ install:
       
 script:
     - eval "${MATRIX_EVAL}"
-    - if [ -n "${APPIMAGE}" ]; then bash tools/build-with-qmake.sh; fi
+    - if [ -n "${APPIMAGE}" ]; then bash tools/build-with-qmake.sh "$QT_BEINERI_VERSION"; fi
     - if [ -n "${DMG}" ]; then
         echo "Build project for Mac in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
         mkdir build && cd build;
