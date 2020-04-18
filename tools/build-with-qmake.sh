@@ -36,7 +36,7 @@ echo "$QT_BEINERI_VERSION";
 # Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
 if [ -z "${QT_BEINERI_VERSION+x}" ]; then 
     echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to call this script in your travis.yml file to use from beineri repo, qt512${NC}";
-    QT_BEINERI_VERSION="514";
+    QT_BEINERI_VERSION="qt514";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # QTV You can set this in your Environment, so do not overwrite it
@@ -91,11 +91,11 @@ sudo apt-get update --yes; sudo apt-get install --yes p7zip;
 sudo apt-get install --yes "${QTV}base" "${QTV}quickcontrols" "${QTV}quickcontrols2" "${QTV}graphicaleffects" "${QTV}svg" "${QTV}scxml" "${QTV}script" "${QTV}tools" "${QTV}translations" "${QTV}x11extras" "${QTV}declarative" libgl1-mesa-dev;
 sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
 # Source the Qt Environment
-if [ -f "/opt/qt${QTV}/bin/qt${QTV}-env.sh" ]; then 
+if [ -f "/opt/${QTV}/bin/${QTV}-env.sh" ]; then 
     # shellcheck disable=SC1090
-    source "/opt/qt${QTV}/bin/qt${QTV}-env.sh";
+    source "/opt/${QTV}/bin/${QTV}-env.sh";
 else
-    echo "${WARNING_COLOR}Error /opt/qt${QTV}/bin/qt${QTV}-env.sh Not found!${NC}"
+    echo "${WARNING_COLOR}Error /opt/${QTV}/bin/${QTV}-env.sh Not found!${NC}"
     ls /opt/;
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
