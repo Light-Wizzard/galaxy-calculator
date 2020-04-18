@@ -22,6 +22,7 @@
 # Debug Information, not always a good idea when not debugging, and thanks to the TheAssassin, this is now working.
 # These are the setting you might want to change
 declare -ix DEBUGGING; DEBUGGING=1;
+declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;
 # Below should be agnostic
 if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 # Exit on error
@@ -33,23 +34,23 @@ export NC='\033[0m';
 # Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
 if [ -z "${GITHUB_TOKEN}" ]; then
     echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
-    exit 1;
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # Define GITHUB_EMAIL in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
 if [ -z "${GITHUB_EMAIL}" ]; then
     echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
-    exit 1;
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # If not defined it will use this as a default
 if [ -z "${BIN_PRO_RES_NAME}" ]; then
     echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
-    exit 1;
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
 if [ -z "$QT_BEINERI_VERSION" ]; then 
     echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
     QT_BEINERI_VERSION="5.14.1";
-    #exit 1;
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
 if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
@@ -70,7 +71,7 @@ if [ -z "${QTV}" ]; then
         ;;
     esac
     echo -e "${WARNING_COLOR}Add QTV to your Travis Settings Environment Variable with the version of Qt you want to use from beineri repo, qt512${NC}";
-    exit 1;
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # QT_WASM_VER Qt WASM Version
 if [ -z "${QT_WASM_VER}" ]; then
@@ -79,18 +80,18 @@ if [ -z "${QT_WASM_VER}" ]; then
 fi
 # Qt Installer Framework Package Folder
 if [ -z "${QIF_PACKAGE_URI}" ]; then
-   echo -e "${WARNING_COLOR}Add QIF_PACKAGE_URI to your Travis Settings Environment Variable with the URI for your Project.${NC}";
-   exit 1;
+    echo -e "${WARNING_COLOR}Add QIF_PACKAGE_URI to your Travis Settings Environment Variable with the URI for your Project.${NC}";
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # Set the data path
 if [ -z "${QIF_PACKAGE_DATA}" ]; then
-   export QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
+    export QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
 fi
 # I downloaded the version of Qt Installer I needed, and 7ziped the bin folder
 # I put it in the tools folder, I will extract it later
 if [ -z "${QIF_ARCHIVE}" ]; then
-   echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
-   export QIF_ARCHIVE="tools/qtinstallerframework.7z";
+    echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
+    export QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
 # 
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
@@ -106,7 +107,8 @@ if [ -f "/opt/qt${QTV}/bin/qt${QTV}-env.sh" ]; then
     source "/opt/qt${QTV}/bin/qt${QTV}-env.sh";
 else
     echo "${WARNING_COLOR}Error /opt/qt${QTV}/bin/qt${QTV}-env.sh Not found!${NC}"
-    exit 1;
+    ls /opt/;
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # Set our Artifacts for later
 export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
