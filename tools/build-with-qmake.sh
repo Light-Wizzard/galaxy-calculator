@@ -32,27 +32,27 @@ set -e;
 export WARNING_COLOR='\e[33m';
 export NC='\033[0m';
 export QT_BEINERI_VERSION="$1";
-# Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
-#if [ -z "${GITHUB_TOKEN}" ]; then
-#    echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
-#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-#fi
-## Define GITHUB_EMAIL in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
-#if [ -z "${GITHUB_EMAIL}" ]; then
-#    echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
-#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-#fi
-## If not defined it will use this as a default
-#if [ -z "${BIN_PRO_RES_NAME}" ]; then
-#    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
-#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-#fi
-## Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
-#if [ -z "$QT_BEINERI_VERSION" ]; then 
-#    echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
-#    QT_BEINERI_VERSION="5.14.1";
-#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-#fi
+ Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
+if [ -z "${GITHUB_TOKEN}" ]; then
+    echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+fi
+# Define GITHUB_EMAIL in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
+if [ -z "${GITHUB_EMAIL}" ]; then
+    echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+fi
+# If not defined it will use this as a default
+if [ -z "${BIN_PRO_RES_NAME}" ]; then
+    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+fi
+# Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
+if [ -z "$QT_BEINERI_VERSION" ]; then 
+    echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
+    QT_BEINERI_VERSION="5.14.1";
+    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
 if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
@@ -61,14 +61,23 @@ fi
 #
 if [ -z "${QTV}" ]; then
     case "$QT_BEINERI_VERSION" in
-      "5.12*")
+      "5.10"*)
+            export QTV="qt510";
+            ;;
+      "5.11"*)
+            export QTV="qt511";
+            ;;
+      "5.12"*)
             export QTV="qt512";
             ;;
-      "5.14*")
+      "5.14"*)
             export QTV="qt514";
             ;;
+      "5.15"*)
+            export QTV="qt515";
+            ;;
       *)
-        echo -n "unknown"
+        echo -n "Unknown Qt Version";
         ;;
     esac
     echo -e "${WARNING_COLOR}Add QTV to your Travis Settings Environment Variable with the version of Qt you want to use from beineri repo, qt512${NC}";
