@@ -9,14 +9,6 @@ SOURCES += src/main.cpp src/tablemodel.cpp
 HEADERS += src/tablemodel.h
 
 RESOURCES += resources.qrc
-#
-# This did not change Qt not being installed in LinuxDeploy
-# QML_IMPORT_PATH = qml
-# QML_IMPORT_PATH = $$PWD/qml
-# this is for a Designer, I think that is ui, I do not have any
-# QML_DESIGNER_IMPORT_PATH will be used only in Qt Quick Designer
-QML_IMPORT_PATH =
-QML_DESIGNER_IMPORT_PATH =
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
