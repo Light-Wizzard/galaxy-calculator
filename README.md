@@ -33,7 +33,7 @@ Windows: [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/j
  - :office: [Windows](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/galaxy-calculator_release.zip)
  - :apple: [Apple](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator.dmg)
 
-These are built here:
+The builds are here:
 * [Travis Builds](https://travis-ci.org/github/Light-Wizzard/galaxy-calculator) [![Travis Build Status](https://travis-ci.org/Light-Wizzard/galaxy-calculator.svg?branch=master)](https://travis-ci.org/Light-Wizzard/galaxy-calculator)
 * [AppVeyor Builds](https://ci.appveyor.com/project/Light-Wizzard/galaxy-calculator) [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/j7htumuwfx31elf6?svg=true)](https://ci.appveyor.com/project/Light-Wizzard/galaxy-calculator)
 

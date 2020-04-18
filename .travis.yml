@@ -67,18 +67,10 @@ before_install:
         export QT_WASM_VER="5.13_latest";
         echo -e "${WARNING_COLOR}Add QT_WASM_VER to your Travis Settings Environment Variable with the version of Qt WASM, 5.13_latest${NC}";
       fi
-    - if [ -z "${QT_EMAIL}" ]; then
-        echo -e "${WARNING_COLOR}Add QT_EMAIL to your Travis Settings Environment Variable with the Email Address for your Qt Account in your qtaccount.ini file, leave blank if not using it${NC}";
-      fi
-    - if [ -z "${QT_JWT}" ]; then
-        echo -e "${WARNING_COLOR}Add QT_JWT to your Travis Settings Environment Variable with the jwt for your Qt Account in your qtaccount.ini file, leave blank if not using it${NC}";
-      fi
-    - if [ -z "${QT_U}" ]; then
-        echo -e "${WARNING_COLOR}Add QT_U to your Travis Settings Environment Variable with the u for your Qt Account in your qtaccount.ini file, leave blank if not using it${NC}";
-      fi
     - if [ -z "${QIF_PACKAGE_DATA}" ]; then
-        echo -e "${WARNING_COLOR}Add QIF_PACKAGE_DATA to your Travis Settings Environment Variable with the u for your Qt Account in your qtaccount.ini file, leave blank if not using it${NC}";
-        export QIF_PACKAGE_DATA="packages/com.lightwizzard.galaxycalculator/data";
+        echo -e "${WARNING_COLOR}Add QIF_PACKAGE_DATA to your Travis Settings Environment Variable with the URI for your Project.${NC}";
+        export QIF_PACKAGE_URI="packages/com.lightwizzard.galaxy-calculator";
+        export QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
       fi
     - if [ -z "${QIF_ARCHIVE}" ]; then
         echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
@@ -88,15 +80,13 @@ before_install:
 install:
     - if [ -n "${APPIMAGE}" ]; then 
         echo "Install qt libraries for Linux";
-        sudo apt-get update --yes; 
-        sudo apt-get install --yes p7zip;
+        sudo apt-get update --yes; sudo apt-get install --yes p7zip;
         sudo apt-get install --yes ${QTV}base ${QTV}quickcontrols ${QTV}quickcontrols2 ${QTV}graphicaleffects ${QTV}svg ${QTV}scxml ${QTV}script ${QTV}tools ${QTV}translations ${QTV}x11extras ${QTV}declarative libgl1-mesa-dev; 
         sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
         source /opt/qt*/bin/qt*-env.sh;
-        cp -v "${TRAVIS_BUILD_DIR}/tools/extract-qt-installer" .; cp -v "${TRAVIS_BUILD_DIR}/tools/install-qt" .;
-        export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}.AppImage";  export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}.AppImage.zsync";
         export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
-        export ARTIFACT_APPIMAGE_2="${BIN_PRO_RES_NAME}-travis-x86_64.AppImage";  export ARTIFACT_ZSYNC_2="${BIN_PRO_RES_NAME}-travis-x86_64.AppImage.zsync";
+        export LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  export LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
+        export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
       fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
@@ -146,8 +136,6 @@ after_success:
     - wget -c https://raw.githubusercontent.com/${GITHUB_USERNAME}/${BIN_PRO_RES_NAME}/master/tools/upload.sh;
     - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_APPIMAGE}" ];   then bash ./upload.sh "${ARTIFACT_APPIMAGE}"; fi
     - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_ZSYNC}" ];      then bash ./upload.sh "${ARTIFACT_ZSYNC}"; fi
-    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_APPIMAGE_2}" ]; then bash ./upload.sh "${ARTIFACT_APPIMAGE_2}"; fi
-    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_ZSYNC_2}" ];    then bash ./upload.sh "${ARTIFACT_ZSYNC_2}"; fi
     - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_QIF}" ];        then bash ./upload.sh "${ARTIFACT_QIF}"; fi
     - if [ -n "${DMG}" ]; then bash ./upload.sh "$ARTIFACT"; fi
     - if [ -n "${WEBASM}" ]; then git push origin gh-pages; fi
