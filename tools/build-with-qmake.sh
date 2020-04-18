@@ -21,12 +21,9 @@
 # 
 # Debug Information, not always a good idea when not debugging, and thanks to the TheAssassin, this is now working.
 # These are the setting you might want to change
-declare -ix DEBUGGING; DEBUGGING=0;
-declare -ix USE_CAP_DASH; USE_CAP_DASH=1;
+declare -ix DEBUGGING; DEBUGGING=1;
 # Below should be agnostic
-if [ "${DEBUGGING}" -eq 1 ]; then
-    set -x; 
-fi
+if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 # Exit on error
 set -e;
 #
@@ -51,7 +48,8 @@ fi
 # Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
 if [ -z "$QT_BEINERI_VERSION" ]; then 
     echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
-    exit 1;
+    QT_BEINERI_VERSION="5.14.1";
+    #exit 1;
 fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
 if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
@@ -187,4 +185,7 @@ ls "${QIF_PACKAGE_DATA}/icons";
 echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
 ls;
+#
 echo "Completed build-with-qmake.sh";
+if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
+################################ End of File ##################################
