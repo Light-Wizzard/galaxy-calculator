@@ -32,26 +32,26 @@ set -e;
 export WARNING_COLOR='\e[33m';
 export NC='\033[0m';
 # Define GITHUB_TOKEN in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
-if [ -z "${GITHUB_TOKEN}" ]; then
-    echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
-    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-fi
-# Define GITHUB_EMAIL in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
-if [ -z "${GITHUB_EMAIL}" ]; then
-    echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
-    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-fi
-# If not defined it will use this as a default
-if [ -z "${BIN_PRO_RES_NAME}" ]; then
-    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
-    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-fi
-# Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
-if [ -z "$QT_BEINERI_VERSION" ]; then 
-    echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
-    QT_BEINERI_VERSION="5.14.1";
-    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
-fi
+#if [ -z "${GITHUB_TOKEN}" ]; then
+#    echo -e "${WARNING_COLOR}Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens${NC}";
+#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+#fi
+## Define GITHUB_EMAIL in your Travis Settings Environment Variable error if not set, its not safe to store it in plain text
+#if [ -z "${GITHUB_EMAIL}" ]; then
+#    echo -e "${WARNING_COLOR}Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address${NC}";
+#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+#fi
+## If not defined it will use this as a default
+#if [ -z "${BIN_PRO_RES_NAME}" ]; then
+#    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+#fi
+## Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
+#if [ -z "$QT_BEINERI_VERSION" ]; then 
+#    echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to your travis.yml file to use from beineri repo, qt512${NC}";
+#    QT_BEINERI_VERSION="5.14.1";
+#    if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
+#fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
 if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
@@ -94,8 +94,8 @@ if [ -z "${QIF_ARCHIVE}" ]; then
     export QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
 # Set GitHub Credentials
-git config --global user.email "${GITHUB_EMAIL}";
-git config --global user.name "${GITHUB_USERNAME}";
+git config --global user.email "${GITHUB_EMAIL}"  >/dev/null 2>&1;
+git config --global user.name "${GITHUB_USERNAME}"  >/dev/null 2>&1;
 # 
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
 if [ "$CI" == "" ] && [ -d "/dev/shm" ]; then TEMP_BASE="/dev/shm"; else TEMP_BASE="/tmp"; fi

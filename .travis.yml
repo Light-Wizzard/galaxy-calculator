@@ -43,10 +43,7 @@ jobs:
 
 before_install:
     # If not defined it will use this as a default
-  - if [ -z "${BIN_PRO_RES_NAME}" ]; then
-        echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
-        #exit 1;
-    fi
+    #- if [ -z "${BIN_PRO_RES_NAME}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
 
 install:
     - if [ -n "${DMG}" ]; then 
