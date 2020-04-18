@@ -61,7 +61,7 @@ fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
 if [ -z "${GITHUB_USERNAME}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
-    declare GITHUB_PROJECT;
+    declare -x GITHUB_PROJECT;
     GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
 fi
 # Qt Installer Framework Package Folder
@@ -71,13 +71,13 @@ if [ -z "${QIF_PACKAGE_URI}" ]; then
 fi
 # Set the data path
 if [ -z "${QIF_PACKAGE_DATA}" ]; then
-    declare QIF_PACKAGE_DATA; QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
+    declare -x QIF_PACKAGE_DATA; QIF_PACKAGE_DATA="${QIF_PACKAGE_URI}/data";
 fi
 # I downloaded the version of Qt Installer I needed, and 7ziped the bin folder
 # I put it in the tools folder, I will extract it later
 if [ -z "${QIF_ARCHIVE}" ]; then
     echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
-    declare QIF_ARCHIVE; QIF_ARCHIVE="tools/qtinstallerframework.7z";
+    declare -x QIF_ARCHIVE; QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
 # Set GitHub Credentials
 git config --global user.email "${GITHUB_EMAIL}"  >/dev/null 2>&1;

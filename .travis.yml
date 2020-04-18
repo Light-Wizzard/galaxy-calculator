@@ -28,12 +28,15 @@ jobs:
       env:
         - APPIMAGE="true"
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-        - QT_BEINERI_VERSION="qt514";
+        - QT_BEINERI_VERSION="qt514"
+
     - os: linux
       dist: xenial
       sudo: require
       services: docker
-      env: WEBASM="true"
+      env: 
+        - WEBASM="true"
+        - QT_WASM_VER="5.13_latest"
     - os: osx
       osx_image: xcode11.0
       compiler: clang
@@ -43,10 +46,6 @@ jobs:
 
 before_install:
     - if [ -z "${BIN_PRO_RES_NAME}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
-    - if [ -z "${QT_WASM_VER}" ]; then
-            declare -x QT_WASM_VER; QT_WASM_VER="5.13_latest";
-            echo -e "Add QT_WASM_VER to your Travis Settings Environment Variable with the version of Qt WASM, default=5.13_latest";
-      fi
 
 install:
     - if [ -n "${DMG}" ]; then 
