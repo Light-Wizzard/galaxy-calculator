@@ -125,6 +125,11 @@ if [ "${LINUX_DEPLOY_USING}" -eq 1 ]; then
     #
     echo "Starting linuxdeployqt-continuous-x86_64.AppImage";
     ./linuxdeployqt-continuous-x86_64.AppImage "${TRAVIS_BUILD_DIR}/usr/share/applications/${BIN_PRO_RES_NAME}.desktop" -extra-plugins=iconengines,imageformats -verbose=2 -qmldir="${TRAVIS_BUILD_DIR}/qml/" -appimage;
+    chmod +x "${BIN_PRO_RES_NAME}"*.AppImage*;
+    ls;
+    # Move them
+    chmod +x "${BIN_PRO_RES_NAME}"*.AppImage*;
+    mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
     echo "Finished linuxdeployqt-continuous-x86_64.AppImage"
 fi
 #
