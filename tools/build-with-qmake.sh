@@ -101,6 +101,14 @@ export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
 ./linuxdeploy-x86_64.AppImage --appdir "AppDir" -e "${BIN_PRO_RES_NAME}" -i "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.png" -d "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.desktop" --plugin qt --output appimage;
 # 
 # Move both AppImages
+if [ -f "${ARTIFACT_APPIMAGE}" ]; then
+    echo "Found ${ARTIFACT_APPIMAGE}"
+    ls "${TRAVIS_BUILD_DIR}/usr";
+    mkdir -p "${TRAVIS_BUILD_DIR}/usr/bin";
+    cp -pv "${ARTIFACT_APPIMAGE}" "${TRAVIS_BUILD_DIR}/usr/bin";
+    cp -pv "${ARTIFACT_ZSYNC}" "${TRAVIS_BUILD_DIR}/usr/bin";
+    ls "${TRAVIS_BUILD_DIR}/usr/bin";
+fi
 mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
 # Pop Directory for Qt Installer Framework
 popd;
