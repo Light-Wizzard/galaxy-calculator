@@ -91,7 +91,7 @@ chmod +x linuxdeploy*.AppImage;
 # 
 # AppImage update informatoin
 # Renamed -*x86_64.AppImage.zsync not sure what the * does, but if it does version numbers, I do not want it.
-export UPDATE_INFORMATION="gh-releases-zsync|${GITHUB_USERNAME}|${GITHUB_PROJECT}|continuous|${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
+export UPDATE_INFORMATION="gh-releases-zsync|${GITHUB_USERNAME}|${GITHUB_PROJECT}|continuous|${ARTIFACT_ZSYNC}";
 # 
 # make sure Qt plugin finds QML sources so it can deploy the imported files
 export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
@@ -123,8 +123,8 @@ mkdir -pv qtinstallerframework;
 chmod -R +x ./qtinstallerframework;
 # 
 # Copy all the files that Qt Installer Framework needs
-cp -v "${TRAVIS_BUILD_DIR}/${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}" "${QIF_PACKAGE_DATA}";
-cp -v "${TRAVIS_BUILD_DIR}/${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}" "${QIF_PACKAGE_DATA}";
+cp -v "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${QIF_PACKAGE_DATA}";
+cp -v "${TRAVIS_BUILD_DIR}/${ARTIFACT_ZSYNC}"    "${QIF_PACKAGE_DATA}";
 # The packages/${QIF_PACKAGE_URI}/meta/installscript.qs creates this: cp -v "resources/${BIN_PRO_RES_NAME}.desktop" "${QIF_PACKAGE_DATA}";
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.png" "${QIF_PACKAGE_DATA}";
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.svg" "${QIF_PACKAGE_DATA}";
