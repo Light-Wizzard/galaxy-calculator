@@ -66,6 +66,8 @@ install:
         source /opt/qt*/bin/qt*-env.sh;
         export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}-x86_64.AppImage"; 
         export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}-x86_64.AppImage.zsync"; 
+        export ARTIFACT_APPIMAGE_LDQT="${BIN_PRO_RES_NAME}-travis-x86_64.AppImage"; 
+        export ARTIFACT_ZSYNC_LDQT="${BIN_PRO_RES_NAME}-travis-x86_64.AppImage.zsync"; 
         export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
       fi
     - if [ -n "${DMG}" ]; then 
@@ -121,10 +123,12 @@ after_success:
         echo "This is not the master branch, no deploy will be done"; travis_terminate 0;
       fi
     - wget -c https://raw.githubusercontent.com/${GITHUB_USERNAME}/${BIN_PRO_RES_NAME}/master/tools/upload.sh;
-    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_APPIMAGE}" ];   then bash ./upload.sh "${ARTIFACT_APPIMAGE}"; fi
-    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_ZSYNC}" ];      then bash ./upload.sh "${ARTIFACT_ZSYNC}"; fi
-    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_QIF}" ];        then bash ./upload.sh "${ARTIFACT_QIF}"; fi
-    - if [ -n "${DMG}" ]      && [ -f "${ARTIFACT_MAC_QIF}" ];    then bash ./upload.sh "${ARTIFACT_MAC_QIF}"; fi
-    - if [ -n "${DMG}" ]      && [ -f "${ARTIFACT_MAC}" ];        then bash ./upload.sh "${ARTIFACT_MAC}"; fi
+    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_APPIMAGE}" ];      then bash ./upload.sh "${ARTIFACT_APPIMAGE}"; fi
+    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_ZSYNC}" ];         then bash ./upload.sh "${ARTIFACT_ZSYNC}"; fi
+    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_APPIMAGE_LDQT}" ]; then bash ./upload.sh "${ARTIFACT_APPIMAGE_LDQT}"; fi
+    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_ZSYNC_LDQT}" ];    then bash ./upload.sh "${ARTIFACT_ZSYNC_LDQT}"; fi
+    - if [ -n "${APPIMAGE}" ] && [ -f "${ARTIFACT_QIF}" ];           then bash ./upload.sh "${ARTIFACT_QIF}"; fi
+    - if [ -n "${DMG}" ]      && [ -f "${ARTIFACT_MAC_QIF}" ];       then bash ./upload.sh "${ARTIFACT_MAC_QIF}"; fi
+    - if [ -n "${DMG}" ]      && [ -f "${ARTIFACT_MAC}" ];           then bash ./upload.sh "${ARTIFACT_MAC}"; fi
     - if [ -n "${WEBASM}" ]; then git push origin gh-pages; fi
     
