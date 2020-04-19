@@ -40,6 +40,10 @@ The builds are here:
 
 Windows (Tested on 7 and 10 let me know if 8 works): Download zip and extract it, and run the file galaxy-calculator.exe inside of the deploy folder.
 
+Windows 10 built on my machine, the ones above are created on AppVeyor, but the download is not working.
+* Installer: http://LightWizzard.com/installers/windows/GalaxyCalculatorInstaller.exe
+* Executable Standalone: http://LightWizzard.com/installers/windows/GalaxyCalculator.exe
+
 These are other versions of the program that I made by hand:
 
 Linux: to use zsync you must have it installed.
