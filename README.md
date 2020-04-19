@@ -46,7 +46,8 @@ Windows 10 built on my machine, the ones above are created on AppVeyor, but the 
 
 These are other versions of the program that I made by hand:
 
-Linux: to use zsync you must have it installed.
+Linux: to use zsync you must have it installed. 
+Note, I need to update to version 2 for the Internet, doing that now.
 
 ```
 # Arch Linux or Manjaro
@@ -80,6 +81,9 @@ If you do not see your OS, just download, extract to a folder, and open with Qt 
 
 TableView for Qt version greater than or equal to 5.12, still has a lot of work, as a result, it does not like a few things, like changing themes on the fly, 
 or even having a theme, and I cannot seem to get the text alignment to work, as such, the table looks ugly, but will improve with each Qt release.
+
+Stephan Binner made a Qt 5.13.2 version for Xenial for me, and I am using it, so the TableView is looking much better.
+https://launchpad.net/~beineri/+archive/ubuntu/opt-qt-5.13.2-xenial
 
 Currently I am working on learning Qt 3D Studio so I can add a Graphical Simulator, that will have two views, 
 one of an view of the Galaxy with a sample of Tracks, since screen space is a limiting factor, and the second view is of one Track, for closer inspection.
