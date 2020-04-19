@@ -64,7 +64,14 @@ install:
         sudo apt-get update --yes -q; 
         sudo apt-get install --yes -q "${QTV}base" "${QTV}quickcontrols" "${QTV}quickcontrols2" "${QTV}graphicaleffects" "${QTV}svg" "${QTV}scxml" "${QTV}script" "${QTV}tools" "${QTV}translations" "${QTV}x11extras" "${QTV}declarative";
         sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
-        source /opt/qt*/bin/qt*-env.sh;
+        if [ -f "/opt/${QTV}/bin/${QTV}-env.sh" ]; then 
+            echo source /opt/qt*/bin/qt*-env.sh;
+            source "/opt/${QTV}/bin/${QTV}-env.sh";
+            echo "Done Sourcing";
+        else
+            echo "Error /opt/${QTV}/bin/${QTV}-env.sh Not found!"
+            ls /opt/;
+        fi
         declare -x LINUX_DEPLOY_APP_IMAGE_ARCH; LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  
         declare -x LINUX_DEPLOY_APP_ZSYNC_ARCH; LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
         declare -x ARTIFACT_APPIMAGE;           ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  

@@ -49,7 +49,9 @@ INCLUDEPATH += tmp/moc/release_shared
 DISTFILES += macos/Info.plist \
   .appveyor.yml \
   .gitignore \
+  .gitattributes \
   .travis.yml \
+  Dockerfile \
   CMakeLists.txt \
   README.md \
   config/config.xml \
@@ -81,10 +83,7 @@ DISTFILES += macos/Info.plist \
   qml/images/right-32.png \
   qml/images/stop-32.png\
   bash/makeappendix.a.sh bash/makeappendix.a.zip \
-  tools/Galaxy-Calculator.desktop \
-  tools/build-with-cmake.sh \
   tools/build-with-qmake.sh \
-  tools/install-qt.sh \
   tools/qtinstallerframework.7z \
   tools/upload.sh \
   resources/CMakeLists.txt \
@@ -92,7 +91,7 @@ DISTFILES += macos/Info.plist \
   resources/Galaxy-Calculator.svg \
   resources/Galaxy-Calculator.ico \
   resources/Galaxy-Calculator.png \
-  packages/com.lightwizzard.galaxycalculator/data/README.txt \
+  packages/com.lightwizzard.galaxycalculator/data/README.md \
   packages/com.lightwizzard.galaxycalculator/meta/installscript.qs \
   packages/com.lightwizzard.galaxycalculator/meta/package.xml \
   usr/share/bin/README.md \

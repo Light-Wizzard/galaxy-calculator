@@ -113,7 +113,7 @@ mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
 # Pop Directory for Qt Installer Framework
 popd;
 # 
-echo "Running Qt Installer Framework";
+echo "Preparing for Qt Installer Framework";
 # 
 # Instead of trying to install Qt Installer Framework, I use 7zip to compress the bin folder
 # I will use a relative path from TRAVIS_BUILD_DIR
@@ -131,6 +131,7 @@ cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.svg" "${QIF_PACKAGE_DAT
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.ico" "${QIF_PACKAGE_DATA}";
 rsync -Ravr "${TRAVIS_BUILD_DIR}/usr/share/icons" "${QIF_PACKAGE_DATA}/icons";
 ls "${QIF_PACKAGE_DATA}/icons";
+ls; 
 # 
 echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
