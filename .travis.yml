@@ -92,9 +92,6 @@ script:
         find . | grep dmg;
         export ARTIFACT_MAC="${BIN_PRO_RES_NAME}.dmg"; 
         export ARTIFACT_MAC_QIF="${BIN_PRO_RES_NAME}-Mac-Installer";
-        cp "${TRAVIS_BUILD_DIR}/tools/QtInstallerFramework-mac-x64.dmg" .;
-        chmod +x "./QtInstallerFramework-mac-x64.dmg";
-        "./QtInstallerFramework-mac-x64.dmg" -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_MAC_QIF}";
       fi
     - if [ -n "${WEBASM}" ]; then
         echo "Build WEBASM in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
