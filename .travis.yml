@@ -14,7 +14,7 @@ jobs:
         apt:
           sources:
             - sourceline: ppa:ubuntu-toolchain-r/test
-            - sourceline: ppa:beineri/opt-qt-5.14.1-xenial
+            - sourceline: ppa:beineri/opt-qt-5.12.6-xenial
           packages:
             - binutils
             - g++-7
@@ -28,7 +28,7 @@ jobs:
       env:
         - APPIMAGE="true"
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-        - QT_BEINERI_VERSION="qt514"
+        - QT_BEINERI_VERSION="qt512"
 
     - os: linux
       dist: xenial
