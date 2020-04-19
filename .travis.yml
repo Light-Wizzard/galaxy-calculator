@@ -93,9 +93,9 @@ script:
         export ARTIFACT_MAC="${BIN_PRO_RES_NAME}.dmg"; 
         export ARTIFACT_MAC_QIF="${BIN_PRO_RES_NAME}-Mac-Installer";
         export QTIFWVER="3.2.2";
-        export qtIFW="QtInstallerFramework-mac-x64.dmg"
-        wget "http://download.qt.io/official_releases/qt-installer-framework/${QTIFWVER}/${qtIFW}";
-        hdiutil convert "${qtIFW}" -format UDZO -o qtifw;
+        export QTIFW_MAC="QtInstallerFramework-mac-x64.dmg";
+        wget "http://download.qt.io/official_releases/qt-installer-framework/${QTIFWVER}/${QTIFW_MAC}";
+        hdiutil convert "${QTIFW_MAC}" -format UDZO -o qtifw;
         7z x -oqtifw qtifw.dmg -bb;
         7z x -oqtifw qtifw/5.hfsx -bb;
         chmod +x qtifw/QtInstallerFramework-mac-x64/QtInstallerFramework-mac-x64.app/Contents/MacOS/QtInstallerFramework-mac-x64;
