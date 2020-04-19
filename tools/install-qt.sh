@@ -1,5 +1,13 @@
 #! /bin/bash
-declare -ix DEBUGGING;         DEBUGGING=1;          # Set 1=True and 0=False
+# I run Shell Check, it requires strict Bash Standards, so the extra code is to pass the test. 
+# replace the ? in shell check
+# In my Environment I define DEV_CURRENT_PROJECT="path to root of this project"; 
+# and I define Shell Check DEV_SHELL_CHECK="shell?check"; again remove the "?", 
+# you can not use that word in any doc you check, it is a Key Word used only by it, you define exceptions to your code.
+# cd "${DEV_CURRENT_PROJECT}/tools"; "$DEV_SHELL_CHECK" -x install-qt.sh
+# If you see no output, you have no warnings or errors.
+# You can automate the checking of your scripts this way.
+declare -ix DEBUGGING;         DEBUGGING=0;          # Set 1=True and 0=False
 declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;  # Set 1=True and 0=False
 # Below should be agnostic
 if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
@@ -41,9 +49,6 @@ if [ -z "${QIF_ARCHIVE+x}" ]; then
     echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
     declare -x QIF_ARCHIVE; QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
-# 
-# use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
-if [ "$CI" == "" ] && [ -d "/dev/shm" ]; then TEMP_BASE="/dev/shm"; else TEMP_BASE="/tmp"; fi
 # 
 echo "Install qt libraries for Linux";
 sudo apt-get update --yes; sudo apt-get install --yes p7zip;

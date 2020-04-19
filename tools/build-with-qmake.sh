@@ -53,6 +53,10 @@ export LINUX_DEPLOY_APP_IMAGE_ARCH;
 export LINUX_DEPLOY_APP_ZSYNC_ARCH;
 export ARTIFACT_APPIMAGE;  
 export ARTIFACT_ZSYNC;
+# 
+# use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
+declare TEMP_BASE;
+if [ "$CI" == "" ] && [ -d "/dev/shm" ]; then TEMP_BASE="/dev/shm"; else TEMP_BASE="/tmp"; fi
 #
 echo "Make Temp Foler";
 #
