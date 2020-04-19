@@ -100,6 +100,7 @@ export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
 # initialize AppDir, bundle shared libraries, add desktop file and icon, use Qt plugin to bundle additional resources, and build AppImage, all in one command
 ./linuxdeploy-x86_64.AppImage --appdir "AppDir" -e "${BIN_PRO_RES_NAME}" -i "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.png" -d "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.desktop" --plugin qt --output appimage;
 # 
+chmod +x "${BIN_PRO_RES_NAME}"*.AppImage*;
 mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
 # Pop Directory for Qt Installer Framework
 popd;
@@ -133,6 +134,6 @@ ls "${QIF_PACKAGE_URI}/data";
 echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
 #
-echo "{WARNING_COLOR}Completed build-with-qmake.sh${NC}";
+echo -e "${WARNING_COLOR}Completed build-with-qmake.sh${NC}";
 if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 ################################ End of File ##################################

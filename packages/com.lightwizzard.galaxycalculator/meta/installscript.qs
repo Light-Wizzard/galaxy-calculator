@@ -39,8 +39,8 @@ Component.prototype.createOperations = function()
     if (systemInfo.productType === "windows") 
     {
         component.addOperation("CreateShortcut", "@TargetDir@/Galaxy-Calculator.exe", "@StartMenuDir@/Galaxy-Calculator.lnk",
-            "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll",
-            "iconId=2", "description=Galaxy Calculator by the Light Wizzard");
+            "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=2", 
+            "description=Galaxy Calculator by the Light Wizzard");
     }
     /* ************************************************************************
         installer.value("os") === "x11"
@@ -49,8 +49,8 @@ Component.prototype.createOperations = function()
     if (systemInfo.kernelType === "linux")
     {
 	    component.addOperation( "InstallIcons", "@TargetDir@/icons" );
-        component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator.desktop", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@\nName[en_US]=Galaxy-Calculator.desktop");
-        component.addElevatedOperation("Copy", "@TargetDir@/Galaxy-Calculator.desktop", "@HomeDir@/Desktop/Galaxy-Calculator.desktop");
+        component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@/Galaxy-Calculator\nName[en_US]=Galaxy-Calculator.desktop");
+        component.addElevatedOperation("Copy", "@TargetDir@/Galaxy-Calculator", "@HomeDir@/Desktop/Galaxy-Calculator.desktop");
     }
 } // end createOperations
 // End of File
