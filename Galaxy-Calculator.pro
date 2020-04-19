@@ -84,6 +84,7 @@ DISTFILES += macos/Info.plist \
   tools/Galaxy-Calculator.desktop \
   tools/build-with-cmake.sh \
   tools/build-with-qmake.sh \
+  tools/install-qt.sh \
   tools/qtinstallerframework.7z \
   tools/upload.sh \
   resources/CMakeLists.txt \

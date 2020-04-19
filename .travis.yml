@@ -45,9 +45,17 @@ jobs:
         - MATRIX_EVAL="COMPILER=clang++"
 
 before_install:
-    - if [ -z "${BIN_PRO_RES_NAME+x}" ]; then echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}"; fi
+    - if [ -z "${BIN_PRO_RES_NAME+x}" ]; then echo -e "Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name"; exit 1; fi
+    - if [ -z "${GITHUB_TOKEN+x}" ]; then echo -e "Add GITHUB_TOKEN to your Travis Settings Environment Variable with a value from Github Settings Developer Personal access tolkens"; exit 1; fi
+    - if [ -z "${GITHUB_EMAIL+x}" ]; then echo -e "Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address"; exit 1; fi    
+    - if [ -z "${GITHUB_USERNAME+x}" ] || [ -z "${GITHUB_PROJECT}" ]; then  
+            OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
+            declare -x GITHUB_USERNAME;          declare -x GITHUB_PROJECT;
+            GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
+      fi
 
 install:
+    - if [ -n "${APPIMAGE}" ]; then source tools/install-qt.sh "$QT_BEINERI_VERSION"; fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
         brew update > /dev/null; 
@@ -62,7 +70,7 @@ script:
         declare -g ARTIFACT_APPIMAGE;
         declare -g ARTIFACT_ZSYNC;
         declare -g ARTIFACT_QIF;
-        source tools/build-with-qmake.sh "$QT_BEINERI_VERSION"; 
+        source tools/build-with-qmake.sh; 
       fi
     - if [ -n "${DMG}" ]; then
         echo "Build project for Mac in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
