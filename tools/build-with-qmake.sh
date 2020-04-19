@@ -33,7 +33,7 @@ declare WARNING_COLOR='\e[101m';
 declare NC='\033[0m';
 # If not defined it will use this as a default
 if [ -z "${BIN_PRO_RES_NAME+x}" ]; then
-    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+    echo -e "Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
@@ -122,7 +122,7 @@ if [ -f "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" ]; then
     cp -pv "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${QIF_PACKAGE_URI}/data";
     cp -pv "${TRAVIS_BUILD_DIR}/${ARTIFACT_ZSYNC}" "${QIF_PACKAGE_URI}/data";
 else
-    echo -e "${WARNING_COLOR}Missing ${BUILD_DIR}/${ARTIFACT_APPIMAGE} ${NC}";
+    echo -e "Missing ${BUILD_DIR}/${ARTIFACT_APPIMAGE} ";
 fi
 # The packages/${QIF_PACKAGE_URI}/meta/installscript.qs creates this: cp -v "resources/${BIN_PRO_RES_NAME}.desktop" "${QIF_PACKAGE_URI}";
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.png" "${QIF_PACKAGE_URI}/data";
@@ -134,6 +134,6 @@ ls "${QIF_PACKAGE_URI}/data";
 echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
 #
-echo -e "${WARNING_COLOR}Completed build-with-qmake.sh${NC}";
+echo -e "Completed build-with-qmake.sh";
 if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 ################################ End of File ##################################
