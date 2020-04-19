@@ -58,7 +58,12 @@ install:
       
 script:
     - eval "${MATRIX_EVAL}"
-    - if [ -n "${APPIMAGE}" ]; then source tools/build-with-qmake.sh "$QT_BEINERI_VERSION"; fi
+    - if [ -n "${APPIMAGE}" ]; then 
+        declare -g ARTIFACT_APPIMAGE;
+        declare -g ARTIFACT_ZSYNC;
+        declare -g ARTIFACT_QIF;
+        source tools/build-with-qmake.sh "$QT_BEINERI_VERSION"; 
+      fi
     - if [ -n "${DMG}" ]; then
         echo "Build project for Mac in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
         mkdir build && cd build;
@@ -71,14 +76,14 @@ script:
       fi
     - if [ -n "${WEBASM}" ]; then
         echo "Build WEBASM in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
+        git config --global user.email "${GITHUB_EMAIL}"  >/dev/null 2>&1;
+        git config --global user.name "${GITHUB_USERNAME}"  >/dev/null 2>&1;
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${BIN_PRO_RES_NAME};
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
         git fetch --all;
-        git config --global user.name "${GITHUB_USERNAME}";
-        git config --global user.email "${GITHUB_EMAIL}";
         echo "WEBASM make build folder and run docker";
         mkdir build;
-        docker run --rm -v "${PWD}:/project/source" -v "${PWD}/build:/project/build" maukalinow/qtwasm_builder:${QT_WASM_VER};
+        docker run --rm -v "${PWD}:/project/source" -v "${PWD}/build:/project/build" "maukalinow/qtwasm_builder:${QT_WASM_VER}";
         rm -rf build/{Makefile,*.o,*.cpp};
         git checkout --track origin/gh-pages;
         mv -v build/* .;

@@ -90,9 +90,8 @@ echo "Install qt libraries for Linux";
 sudo apt-get update --yes; sudo apt-get install --yes p7zip;
 sudo apt-get install --yes "${QTV}base" "${QTV}quickcontrols" "${QTV}quickcontrols2" "${QTV}graphicaleffects" "${QTV}svg" "${QTV}scxml" "${QTV}script" "${QTV}tools" "${QTV}translations" "${QTV}x11extras" "${QTV}declarative" libgl1-mesa-dev;
 sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
-# Source the Qt Environment
+# Source the Qt Environment file
 if [ -f "/opt/${QTV}/bin/${QTV}-env.sh" ]; then 
-    echo "source /opt/${QTV}/bin/${QTV}-env.sh";
     # shellcheck disable=SC1090
     source "/opt/${QTV}/bin/${QTV}-env.sh";
 else
