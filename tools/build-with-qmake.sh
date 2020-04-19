@@ -123,6 +123,7 @@ mkdir -pv qtinstallerframework;
 chmod -R +x ./qtinstallerframework;
 # 
 # Copy all the files that Qt Installer Framework needs
+ls "${TRAVIS_BUILD_DIR}";
 cp -v "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${QIF_PACKAGE_DATA}";
 cp -v "${TRAVIS_BUILD_DIR}/${ARTIFACT_ZSYNC}"    "${QIF_PACKAGE_DATA}";
 # The packages/${QIF_PACKAGE_URI}/meta/installscript.qs creates this: cp -v "resources/${BIN_PRO_RES_NAME}.desktop" "${QIF_PACKAGE_DATA}";
