@@ -43,16 +43,10 @@ if [ -z "${GITHUB_USERNAME+x}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
 fi
 # Set our Artifacts for later
-declare -x LINUX_DEPLOY_APP_IMAGE_ARCH; LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  
-declare -x LINUX_DEPLOY_APP_ZSYNC_ARCH; LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
-declare -x ARTIFACT_APPIMAGE;           ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  
-declare -x ARTIFACT_ZSYNC;              ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
-declare -x ARTIFACT_QIF;                ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
 #
-export LINUX_DEPLOY_APP_IMAGE_ARCH;  
-export LINUX_DEPLOY_APP_ZSYNC_ARCH;
-export ARTIFACT_APPIMAGE;  
-export ARTIFACT_ZSYNC;
+export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}-x86_64.AppImage";
+export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}-x86_64.AppImage.zsync";
+export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
 # 
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
 declare TEMP_BASE;
@@ -97,12 +91,10 @@ chmod +x linuxdeploy*.AppImage;
 # 
 # AppImage update informatoin
 # Renamed -*x86_64.AppImage.zsync not sure what the * does, but if it does version numbers, I do not want it.
-declare -x UPDATE_INFORMATION; UPDATE_INFORMATION="gh-releases-zsync|${GITHUB_USERNAME}|${GITHUB_PROJECT}|continuous|${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
-export UPDATE_INFORMATION;
+export UPDATE_INFORMATION="gh-releases-zsync|${GITHUB_USERNAME}|${GITHUB_PROJECT}|continuous|${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
 # 
 # make sure Qt plugin finds QML sources so it can deploy the imported files
-declare -x QML_SOURCES_PATHS; QML_SOURCES_PATHS="${REPO_ROOT}/qml";
-export QML_SOURCES_PATHS;
+export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
 # 
 # QtQuickApp does support "make install", but we don't use it because we want to show the manual packaging approach in this example
 # initialize AppDir, bundle shared libraries, add desktop file and icon, use Qt plugin to bundle additional resources, and build AppImage, all in one command

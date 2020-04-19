@@ -22,11 +22,11 @@ jobs:
             - g++-7
             - git
             - libgl1-mesa-dev
+            - libjpeg-dev
+            - libmagic-dev
+            - libpng-dev
             - libxkbcommon-x11-0
             - libzstd-dev
-            - libmagic-dev
-            - libjpeg-dev
-            - libpng-dev
             - p7zip-full  
             - zlib1g-dev
       env:
@@ -100,11 +100,11 @@ script:
       fi
     - if [ -n "${WEBASM}" ]; then
         echo "Build WEBASM in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
-        git config --global user.email "${GITHUB_EMAIL}"  >/dev/null 2>&1;
-        git config --global user.name "${GITHUB_USERNAME}"  >/dev/null 2>&1;
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${BIN_PRO_RES_NAME};
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
         git fetch --all;
+        git config --global user.email "${GITHUB_EMAIL}";
+        git config --global user.name "${GITHUB_USERNAME}";
         echo "WEBASM make build folder and run docker";
         mkdir -p build;
         docker run --rm -v "${PWD}:/project/source" -v "${PWD}/build:/project/build" "maukalinow/qtwasm_builder:${QT_WASM_VER}";
