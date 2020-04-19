@@ -51,10 +51,11 @@ if [ -z "${QIF_ARCHIVE+x}" ]; then
 fi
 # 
 echo "Install qt libraries for Linux";
-sudo apt-get update --yes; sudo apt-get install --yes p7zip;
-sudo apt-get install --yes "${QTV}base" "${QTV}quickcontrols" "${QTV}quickcontrols2" "${QTV}graphicaleffects" "${QTV}svg" "${QTV}scxml" "${QTV}script" "${QTV}tools" "${QTV}translations" "${QTV}x11extras" "${QTV}declarative" libgl1-mesa-dev;
-sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
+sudo apt-get update --yes -q; 
+sudo apt-get install --yes -q "${QTV}base" "${QTV}quickcontrols" "${QTV}quickcontrols2" "${QTV}graphicaleffects" "${QTV}svg" "${QTV}scxml" "${QTV}script" "${QTV}tools" "${QTV}translations" "${QTV}x11extras" "${QTV}declarative";
+#sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
 # Source the Qt Environment file
+if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 if [ -f "/opt/${QTV}/bin/${QTV}-env.sh" ]; then 
     # shellcheck disable=SC1090
     source "/opt/${QTV}/bin/${QTV}-env.sh";
@@ -66,5 +67,4 @@ else
 fi
 echo "Done with Qt Installation and setting Environment"; 
 echo "Completed install-qt.sh";
-if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 ################################ End of File ##################################

@@ -21,7 +21,7 @@
 # 
 # Debug Information, not always a good idea when not debugging, and thanks to the TheAssassin, this is now working.
 # These are the setting you might want to change
-declare -ix DEBUGGING;         DEBUGGING=1;          # Set 1=True and 0=False
+declare -ix DEBUGGING;         DEBUGGING=0;          # Set 1=True and 0=False
 declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;  # Set 1=True and 0=False
 # Below should be agnostic
 if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
@@ -43,12 +43,12 @@ if [ -z "${GITHUB_USERNAME+x}" ] || [ -z "${GITHUB_PROJECT}" ]; then
     GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
 fi
 # Set our Artifacts for later
-declare -x ARTIFACT_QIF;                ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
 declare -x LINUX_DEPLOY_APP_IMAGE_ARCH; LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  
 declare -x LINUX_DEPLOY_APP_ZSYNC_ARCH; LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
 declare -x ARTIFACT_APPIMAGE;           ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  
 declare -x ARTIFACT_ZSYNC;              ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
-
+declare -x ARTIFACT_QIF;                ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
+#
 export LINUX_DEPLOY_APP_IMAGE_ARCH;  
 export LINUX_DEPLOY_APP_ZSYNC_ARCH;
 export ARTIFACT_APPIMAGE;  

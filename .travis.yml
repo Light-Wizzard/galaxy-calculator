@@ -15,16 +15,20 @@ jobs:
           sources:
             - sourceline: ppa:ubuntu-toolchain-r/test
             - sourceline: ppa:beineri/opt-qt-5.12.6-xenial
+          update: true  
           packages:
             - binutils
-            - g++-7
-            - libgl1-mesa-dev
-            - libxkbcommon-x11-0
-            - zlib1g-dev
-            - libzstd-dev
-            - p7zip-full  
+            - cimg-dev
             - g++-7
             - git
+            - libgl1-mesa-dev
+            - libxkbcommon-x11-0
+            - libzstd-dev
+            - libmagic-dev
+            - libjpeg-dev
+            - libpng-dev
+            - p7zip-full  
+            - zlib1g-dev
       env:
         - APPIMAGE="true"
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
