@@ -79,9 +79,6 @@ if [ -z "${QIF_ARCHIVE+x}" ]; then
     echo -e "${WARNING_COLOR}Add QIF_ARCHIVE to your Travis Settings Environment Variable with the folder/file.7z that contains an Archive of the Qt Installer Framework bin folder${NC}";
     declare -x QIF_ARCHIVE; QIF_ARCHIVE="tools/qtinstallerframework.7z";
 fi
-# Set GitHub Credentials
-git config --global user.email "${GITHUB_EMAIL}"  >/dev/null 2>&1;
-git config --global user.name "${GITHUB_USERNAME}"  >/dev/null 2>&1;
 # 
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
 if [ "$CI" == "" ] && [ -d "/dev/shm" ]; then TEMP_BASE="/dev/shm"; else TEMP_BASE="/tmp"; fi
@@ -99,6 +96,7 @@ else
     ls /opt/;
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
+echo "Done with Qt Installation and setting Environment"; 
 # Set our Artifacts for later
 declare -x ARTIFACT_QIF;                ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
 declare -x LINUX_DEPLOY_APP_IMAGE_ARCH; LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  

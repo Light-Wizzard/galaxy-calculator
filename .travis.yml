@@ -84,10 +84,10 @@ script:
         echo "WEBASM make build folder and run docker";
         mkdir build;
         docker run --rm -v "${PWD}:/project/source" -v "${PWD}/build:/project/build" "maukalinow/qtwasm_builder:${QT_WASM_VER}";
-        rm -rf build/{Makefile,*.o,*.cpp};
+        sudo rm -rf build/{Makefile,*.o,*.cpp};
         git checkout --track origin/gh-pages;
-        mv -v build/* .;
-        rm -rf build;
+        sudo mv -v build/* .;
+        sudo rm -rf build;
         sudo mv -v "${BIN_PRO_RES_NAME}.html" index.html;
         echo "Created WEBASM";
         ls -lh;
