@@ -82,7 +82,7 @@ script:
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
         git fetch --all;
         echo "WEBASM make build folder and run docker";
-        mkdir build;
+        mkdir -p build;
         docker run --rm -v "${PWD}:/project/source" -v "${PWD}/build:/project/build" "maukalinow/qtwasm_builder:${QT_WASM_VER}";
         sudo rm -rf build/{Makefile,*.o,*.cpp};
         git checkout --track origin/gh-pages;

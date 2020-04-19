@@ -91,6 +91,7 @@ sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
 if [ -f "/opt/${QTV}/bin/${QTV}-env.sh" ]; then 
     # shellcheck disable=SC1090
     source "/opt/${QTV}/bin/${QTV}-env.sh";
+    echo "Done Sourcing";
 else
     echo "${WARNING_COLOR}Error /opt/${QTV}/bin/${QTV}-env.sh Not found!${NC}"
     ls /opt/;
@@ -108,7 +109,8 @@ export LINUX_DEPLOY_APP_IMAGE_ARCH;
 export LINUX_DEPLOY_APP_ZSYNC_ARCH;
 export ARTIFACT_APPIMAGE;  
 export ARTIFACT_ZSYNC;
-
+#
+echo "Make Temp Foler";
 #
 # building in temporary directory to keep system clean
 BUILD_DIR="$(mktemp -d -p "$TEMP_BASE" "${BIN_PRO_RES_NAME}-build-XXXXXX")";
@@ -120,7 +122,8 @@ function cleanup()
         rm -rf "$BUILD_DIR";
     fi
 }
-trap cleanup EXIT
+trap "cleanup; exit;" SIGINT SIGTERM
+#trap cleanup EXIT;
 # 
 # store repo root as variable
 REPO_ROOT="$(readlink -f "$(dirname "$(dirname "$0")")")";
