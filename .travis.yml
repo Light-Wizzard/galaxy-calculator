@@ -94,7 +94,7 @@ script:
         export ARTIFACT_MAC_QIF="${BIN_PRO_RES_NAME}-Mac-Installer";
         export QTIFWVER="3.2.2";
         export QTIFW_MAC="QtInstallerFramework-mac-x64.dmg";
-        wget "http://download.qt.io/official_releases/qt-installer-framework/${QTIFWVER}/${QTIFW_MAC}";
+        wget "http://download.qt.io/official_releases/qt-installer-framework/${QTIFWVER}/${QTIFW_MAC}" || true;
         hdiutil convert "${QTIFW_MAC}" -format UDZO -o qtifw;
         7z x -oqtifw qtifw.dmg -bb;
         7z x -oqtifw qtifw/5.hfsx -bb;
