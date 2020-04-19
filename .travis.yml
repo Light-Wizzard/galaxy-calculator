@@ -63,14 +63,7 @@ install:
         sudo apt-get update --yes -q; 
         sudo apt-get install --yes -q "${QTV}base" "${QTV}quickcontrols" "${QTV}quickcontrols2" "${QTV}graphicaleffects" "${QTV}svg" "${QTV}scxml" "${QTV}script" "${QTV}tools" "${QTV}translations" "${QTV}x11extras" "${QTV}declarative";
         sudo apt-get autoremove; sudo apt-get -f install; sudo apt-get autoclean;
-        if [ -f "/opt/${QTV}/bin/${QTV}-env.sh" ]; then 
-            source /opt/qt*/bin/qt*-env.sh;
-            echo source "/opt/${QTV}/bin/${QTV}-env.sh";
-            echo "Done Sourcing";
-        else
-            echo "Error /opt/${QTV}/bin/${QTV}-env.sh Not found!"
-            ls /opt/;
-        fi
+        source /opt/qt*/bin/qt*-env.sh;
         export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}-x86_64.AppImage"; 
         export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}-x86_64.AppImage.zsync"; 
         export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
