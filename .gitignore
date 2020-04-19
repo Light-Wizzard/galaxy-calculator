@@ -2,3 +2,33 @@
 *.zsync
 squashfs-root/
 *build*/
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.o
+*.so
+*.moc
+*.@__thumb
+*.pro.user
+*.pro.user.*
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.gitignore
+ehthumbs.db
+Thumbs.db
+# Folders
+default/
+.git/
+# End of File

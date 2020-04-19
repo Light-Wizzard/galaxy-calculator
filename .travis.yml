@@ -55,7 +55,7 @@ before_install:
       fi
 
 install:
-    - if [ -n "${APPIMAGE}" ]; then source tools/install-qt.sh "$QT_BEINERI_VERSION"; fi
+    - if [ -n "${APPIMAGE}" ]; then source tools/install-qt.sh "${QT_BEINERI_VERSION}"; fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
         brew update > /dev/null; 
