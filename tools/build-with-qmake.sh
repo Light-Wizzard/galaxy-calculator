@@ -24,6 +24,7 @@
 declare -ix DEBUGGING;         DEBUGGING=0;          # Set 1=True and 0=False
 declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;  # Set 1=True and 0=False
 # Below should be agnostic
+# I use a Variable so I can turn it off on exit
 if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 # Exit on error
 set -e;
@@ -60,9 +61,8 @@ BUILD_DIR="$(mktemp -d -p "$TEMP_BASE" "${BIN_PRO_RES_NAME}-build-XXXXXX")";
 # make sure to clean up build dir, even if errors occur
 function cleanup()
 {
-    if [ -d "$BUILD_DIR" ]; then
-        rm -rf "$BUILD_DIR";
-    fi
+    if [ -d "$BUILD_DIR" ]; then rm -rf "$BUILD_DIR"; fi
+    if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 }
 trap "cleanup; exit;" SIGINT SIGTERM
 #trap cleanup EXIT;
@@ -135,5 +135,4 @@ echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
 #
 echo -e "Completed build-with-qmake.sh";
-if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 ################################ End of File ##################################
