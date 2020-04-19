@@ -7,7 +7,7 @@
 # cd "${DEV_CURRENT_PROJECT}/tools"; "$DEV_SHELL_CHECK" -x install-qt.sh
 # If you see no output, you have no warnings or errors.
 # You can automate the checking of your scripts this way.
-declare -ix DEBUGGING;         DEBUGGING=0;          # Set 1=True and 0=False
+declare -ix DEBUGGING;         DEBUGGING=1;          # Set 1=True and 0=False
 declare -ix EXIT_ON_UNDEFINED; EXIT_ON_UNDEFINED=0;  # Set 1=True and 0=False
 # Below should be agnostic
 if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
@@ -18,7 +18,7 @@ set -e;
 declare WARNING_COLOR='\e[33m';
 declare NC='\033[0m';
 declare QT_BEINERI_VERSION; QT_BEINERI_VERSION="$1";
-echo "$QT_BEINERI_VERSION";
+echo "QT_BEINERI_VERSION=$QT_BEINERI_VERSION";
 # Qt Version to install based on travis.yml Environment Variable QT_BEINERI_VERSION
 if [ -z "${QT_BEINERI_VERSION+x}" ]; then 
     echo -e "${WARNING_COLOR}Add QT_BEINERI_VERSION to call this script in your travis.yml file to use from beineri repo, qt512${NC}";
@@ -29,7 +29,7 @@ fi
 if [ -z "${QTV+x}" ]; then
     declare -x QTV; QTV="$QT_BEINERI_VERSION";
 fi
-# If not defined it will use this as a default
+# If not defined it will exit
 if [ -z "${BIN_PRO_RES_NAME+x}" ]; then
     echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
