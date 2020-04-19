@@ -29,11 +29,11 @@ if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 set -e;
 #
 # Terminal Color Codes
-declare WARNING_COLOR='\e[33m';
+declare WARNING_COLOR='\e[5m\e[7m';
 declare NC='\033[0m';
 # If not defined it will use this as a default
 if [ -z "${BIN_PRO_RES_NAME+x}" ]; then
-    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME (BIN_PRO_RES_NAME=${BIN_PRO_RES_NAME}) to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
+    echo -e "${WARNING_COLOR}Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ${NC}";
     if [ "${EXIT_ON_UNDEFINED}" -eq 1 ]; then exit 1; fi    
 fi
 # TRAVIS_REPO_SLUG should always have your GITHUB_USERNAME as the first part / GITHUB_PROJECT, so I split them to use later.
@@ -101,13 +101,16 @@ export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
 ./linuxdeploy-x86_64.AppImage --appdir "AppDir" -e "${BIN_PRO_RES_NAME}" -i "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.png" -d "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.desktop" --plugin qt --output appimage;
 # 
 # Move both AppImages
-if [ -f "${ARTIFACT_APPIMAGE}" ]; then
-    echo "Found ${ARTIFACT_APPIMAGE}"
+echo "BUILD_DIR=${BUILD_DIR}";
+if [ -f "${BUILD_DIR}/${ARTIFACT_APPIMAGE}" ]; then
+    echo "Found ${BUILD_DIR}/${ARTIFACT_APPIMAGE}"
     ls "${TRAVIS_BUILD_DIR}/usr";
     mkdir -p "${TRAVIS_BUILD_DIR}/usr/bin";
-    cp -pv "${ARTIFACT_APPIMAGE}" "${TRAVIS_BUILD_DIR}/usr/bin";
-    cp -pv "${ARTIFACT_ZSYNC}" "${TRAVIS_BUILD_DIR}/usr/bin";
+    cp -pv "${BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${TRAVIS_BUILD_DIR}/usr/bin";
+    cp -pv "${BUILD_DIR}/${ARTIFACT_ZSYNC}" "${TRAVIS_BUILD_DIR}/usr/bin";
     ls "${TRAVIS_BUILD_DIR}/usr/bin";
+else
+    echo -e "${WARNING_COLOR}Missing ${BUILD_DIR}/${ARTIFACT_APPIMAGE} ${NC}";
 fi
 mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
 # Pop Directory for Qt Installer Framework
