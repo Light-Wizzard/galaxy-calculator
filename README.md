@@ -21,7 +21,7 @@ If the badges are Green, you should be able to download the apps, if they are no
 
 This project is in work, so files might break, but source code should run if compiled on any machine.
 
-The Qt Installer Framework is working for Linux and Windows, but Linux is still broken, in work, and the Windows Installer will not download.
+The Qt Installer Framework is working for Linux and maybe Windows but the Installer will not download, in work, I have an installer for Windows 10 below, not sure about 8, but not 7.
 
 ## Status
 Unix: [![Travis Build Status](https://travis-ci.org/Light-Wizzard/galaxy-calculator.svg?branch=master)](https://travis-ci.org/Light-Wizzard/galaxy-calculator)

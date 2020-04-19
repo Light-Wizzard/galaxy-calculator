@@ -35,7 +35,10 @@ Component.prototype.createOperations = function()
 {
     // call default implementation to actually install GalaxyCalculator.exe!
     component.createOperations();
-
+    /* ************************************************************************
+       productType: "windows", "opensuse", "osx"
+       productVersion: "7" for Windows 7, "13.2" for openSUSE 13.2, "10.8" for OS X Mountain Lion
+    */    
     if (systemInfo.productType === "windows") 
     {
         component.addOperation("CreateShortcut", "@TargetDir@/Galaxy-Calculator.exe", "@StartMenuDir@/Galaxy-Calculator.lnk",
@@ -43,10 +46,17 @@ Component.prototype.createOperations = function()
             "description=Galaxy Calculator by the Light Wizzard");
     }
     /* ************************************************************************
+        currentCpuArchitecture:"i386" "x86_64"
         installer.value("os") === "x11"
         systemInfo.kernelTypes: linux, darwin, winnt
     */   
     if (systemInfo.kernelType === "linux")
+    {
+	    component.addOperation( "InstallIcons", "@TargetDir@/icons" );
+        component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator.desktop", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@/Galaxy-Calculator.svg\nName[en_US]=Galaxy-Calculator.desktop");
+        component.addElevatedOperation("Copy", "@TargetDir@/Galaxy-Calculator.desktop", "@HomeDir@/Desktop/Galaxy-Calculator.desktop");
+    }
+    if (systemInfo.kernelType === "darwin")
     {
 	    component.addOperation( "InstallIcons", "@TargetDir@/icons" );
         component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator.desktop", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@/Galaxy-Calculator.svg\nName[en_US]=Galaxy-Calculator.desktop");

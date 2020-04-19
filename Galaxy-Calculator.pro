@@ -15,12 +15,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 macos:QMAKE_INFO_PLIST = macos/Info.plist
 ios:QMAKE_INFO_PLIST = ios/Info.plist
 
-win32{
-	#enter your Windows definitions here ...
+win32
+{
+	# enter your Windows definitions here ...
 }
 
-unix{
-    isEmpty(PREFIX) {
+unix
+{
+    isEmpty(PREFIX) 
+    {
         PREFIX = /usr
     }
 
@@ -31,10 +34,12 @@ unix{
     data.path = $$PREFIX/share/pixmaps/
     INSTALLS += shortcutfiles
     INSTALLS += data
-	macx {
-		# Mac OS X definitions should be entered here ...
+	macx 
+	{
+		RC_FILE = macos/Icon.icns
 	}
-	 else {
+	else 
+	{
 		# Linux definitions go here ...
 	}
 }

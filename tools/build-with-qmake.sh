@@ -29,9 +29,6 @@ if [ "${DEBUGGING}" -eq 1 ]; then set -x; fi
 # Exit on error
 set -e;
 #
-# Terminal Color Codes
-declare WARNING_COLOR='\e[101m';
-declare NC='\033[0m';
 # If not defined it will use this as a default
 if [ -z "${BIN_PRO_RES_NAME+x}" ]; then
     echo -e "Add BIN_PRO_RES_NAME to your Travis Settings Environment Variable with a value from Github value for Binary, pro, and resource Name ";
@@ -81,27 +78,56 @@ qmake -makefile "${REPO_ROOT}";
 make -j"$(nproc)";
 make install INSTALL_ROOT="AppDir";
 # 
-# now, build AppImage using linuxdeploy and linuxdeploy-plugin-qt
-# download linuxdeploy and its Qt plugin
-wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage";
-wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage";
-# 
-# make them executable
-chmod +x linuxdeploy*.AppImage;
-# 
-# AppImage update informatoin
 # Renamed -*x86_64.AppImage.zsync not sure what the * does, but if it does version numbers, I do not want it.
 export UPDATE_INFORMATION="gh-releases-zsync|${GITHUB_USERNAME}|${GITHUB_PROJECT}|continuous|${ARTIFACT_ZSYNC}";
 # 
-# make sure Qt plugin finds QML sources so it can deploy the imported files
-export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
-# 
-# QtQuickApp does support "make install", but we don't use it because we want to show the manual packaging approach in this example
-# initialize AppDir, bundle shared libraries, add desktop file and icon, use Qt plugin to bundle additional resources, and build AppImage, all in one command
-./linuxdeploy-x86_64.AppImage --appdir "AppDir" -e "${BIN_PRO_RES_NAME}" -i "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.png" -d "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.desktop" --plugin qt --output appimage;
-# 
-chmod +x "${BIN_PRO_RES_NAME}"*.AppImage*;
-mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
+# I will have an Example of using LinuxDeploy and LinuxDeployQt
+#
+declare -i LINUX_DEPLOY_USING;
+# Set to 0 to enable LinuxDeploy
+LINUX_DEPLOY_USING=0;
+#
+if [ "${LINUX_DEPLOY_USING}" -eq 0 ]; then
+    # make sure Qt plugin finds QML sources so it can deploy the imported files
+    export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
+    # now, build AppImage using linuxdeploy and linuxdeploy-plugin-qt
+    # download linuxdeploy and its Qt plugin
+    wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage";
+    wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage";
+    # 
+    # make them executable
+    chmod +x linuxdeploy*.AppImage;
+    # 
+    # AppImage update informatoin
+    # 
+    # QtQuickApp does support "make install", but we don't use it because we want to show the manual packaging approach in this example
+    # initialize AppDir, bundle shared libraries, add desktop file and icon, use Qt plugin to bundle additional resources, and build AppImage, all in one command
+    ./linuxdeploy-x86_64.AppImage --appdir "AppDir" -e "${BIN_PRO_RES_NAME}" -i "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.png" -d "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.desktop" --plugin qt --output appimage;
+    # 
+    chmod +x "${BIN_PRO_RES_NAME}"*.AppImage*;
+    mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
+    # Pop Directory for Qt Installer Framework
+fi
+# Set to 1 to enable LinuxDeployQt
+LINUX_DEPLOY_USING=1;
+if [ "${LINUX_DEPLOY_USING}" -eq 1 ]; then
+    echo "Downloading LinuxDeployQt";
+    wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage";
+    chmod a+x "linuxdeployqt-continuous-x86_64.AppImage";
+    unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH;
+    export VERSION="travis";
+    # Move our executable into the bin folder
+    if [ -f "${BIN_PRO_RES_NAME}" ]; then
+        mkdir -p "${TRAVIS_BUILD_DIR}/usr/bin";
+        cp -pv "${BIN_PRO_RES_NAME}" "${TRAVIS_BUILD_DIR}/usr/bin";
+        ls "${TRAVIS_BUILD_DIR}/usr/bin";
+    fi
+    #
+    echo "Starting linuxdeployqt-continuous-x86_64.AppImage";
+    ./linuxdeployqt-continuous-x86_64.AppImage "${TRAVIS_BUILD_DIR}/usr/share/applications/${BIN_PRO_RES_NAME}.desktop" -extra-plugins=iconengines,imageformats -verbose=2 -qmldir="${TRAVIS_BUILD_DIR}/qml/" -appimage;
+    echo "Finished linuxdeployqt-continuous-x86_64.AppImage"
+fi
+#
 # Pop Directory for Qt Installer Framework
 popd;
 # 
