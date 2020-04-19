@@ -135,7 +135,5 @@ echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
 #
 echo -e "${WARNING_COLOR}Completed build-with-qmake.sh${NC}";
-chalk.enabled = true;
-chalk.green('hello');
 if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 ################################ End of File ##################################
