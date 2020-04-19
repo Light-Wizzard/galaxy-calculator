@@ -65,10 +65,15 @@ OBJECTS       = release/main.o \
 DIST          = ../source/macos/Info.plist \
 		../source/.appveyor.yml \
 		../source/.gitignore \
+		../source/.gitattributes \
 		../source/.travis.yml \
+		../source/Dockerfile \
 		../source/CMakeLists.txt \
 		../source/README.md \
 		../source/config/config.xml \
+		../source/packages/com.lightwizzard.galaxy-calculator/data/README.md \
+		../source/packages/com.lightwizzard.galaxy-calculator/meta/installscript.qs \
+		../source/packages/com.lightwizzard.galaxy-calculator/meta/package.xml \
 		../source/qml/BigNumber.js \
 		../source/qml/BigNumberMath.js \
 		../source/qml/Calculator.qml \
@@ -95,8 +100,6 @@ DIST          = ../source/macos/Info.plist \
 		../source/qml/images/stop-32.png \
 		../source/bash/makeappendix.a.sh \
 		../source/bash/makeappendix.a.zip \
-		../source/tools/Galaxy-Calculator.desktop \
-		../source/tools/build-with-cmake.sh \
 		../source/tools/build-with-qmake.sh \
 		../source/tools/qtinstallerframework.7z \
 		../source/tools/upload.sh \
@@ -105,7 +108,7 @@ DIST          = ../source/macos/Info.plist \
 		../source/resources/Galaxy-Calculator.svg \
 		../source/resources/Galaxy-Calculator.ico \
 		../source/resources/Galaxy-Calculator.png \
-		../source/packages/com.lightwizzard.galaxycalculator/data/README.txt \
+		../source/packages/com.lightwizzard.galaxycalculator/data/README.md \
 		../source/packages/com.lightwizzard.galaxycalculator/meta/installscript.qs \
 		../source/packages/com.lightwizzard.galaxycalculator/meta/package.xml \
 		../source/usr/share/bin/README.md \
