@@ -100,18 +100,6 @@ export QML_SOURCES_PATHS="${REPO_ROOT}/qml";
 # initialize AppDir, bundle shared libraries, add desktop file and icon, use Qt plugin to bundle additional resources, and build AppImage, all in one command
 ./linuxdeploy-x86_64.AppImage --appdir "AppDir" -e "${BIN_PRO_RES_NAME}" -i "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.png" -d "${REPO_ROOT}/resources/${BIN_PRO_RES_NAME}.desktop" --plugin qt --output appimage;
 # 
-# Move both AppImages
-echo "BUILD_DIR=${BUILD_DIR}";
-if [ -f "${BUILD_DIR}/${ARTIFACT_APPIMAGE}" ]; then
-    echo "Found ${BUILD_DIR}/${ARTIFACT_APPIMAGE}"
-    ls "${TRAVIS_BUILD_DIR}/usr";
-    mkdir -p "${TRAVIS_BUILD_DIR}/usr/bin";
-    cp -pv "${BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${TRAVIS_BUILD_DIR}/usr/bin";
-    cp -pv "${BUILD_DIR}/${ARTIFACT_ZSYNC}" "${TRAVIS_BUILD_DIR}/usr/bin";
-    ls "${TRAVIS_BUILD_DIR}/usr/bin";
-else
-    echo -e "${WARNING_COLOR}Missing ${BUILD_DIR}/${ARTIFACT_APPIMAGE} ${NC}";
-fi
 mv "${BIN_PRO_RES_NAME}"*.AppImage* "$OLD_CWD";
 # Pop Directory for Qt Installer Framework
 popd;
@@ -127,14 +115,21 @@ chmod -R +x ./qtinstallerframework;
 # 
 # Copy all the files that Qt Installer Framework needs
 ls "${TRAVIS_BUILD_DIR}";
-cp -v "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${QIF_PACKAGE_DATA}";
-cp -v "${TRAVIS_BUILD_DIR}/${ARTIFACT_ZSYNC}"    "${QIF_PACKAGE_DATA}";
-# The packages/${QIF_PACKAGE_URI}/meta/installscript.qs creates this: cp -v "resources/${BIN_PRO_RES_NAME}.desktop" "${QIF_PACKAGE_DATA}";
-cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.png" "${QIF_PACKAGE_DATA}";
-cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.svg" "${QIF_PACKAGE_DATA}";
-cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.ico" "${QIF_PACKAGE_DATA}";
-rsync -Ravr "${TRAVIS_BUILD_DIR}/usr/share/icons" "${QIF_PACKAGE_DATA}/icons";
-ls "${QIF_PACKAGE_DATA}/icons";
+#
+# Copy both AppImages to where Qt Installer Framework needs them
+if [ -f "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" ]; then
+    cp -pv "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" "${QIF_PACKAGE_URI}/data";
+    cp -pv "${TRAVIS_BUILD_DIR}/${ARTIFACT_ZSYNC}" "${QIF_PACKAGE_URI}/data";
+else
+    echo -e "${WARNING_COLOR}Missing ${BUILD_DIR}/${ARTIFACT_APPIMAGE} ${NC}";
+fi
+
+# The packages/${QIF_PACKAGE_URI}/meta/installscript.qs creates this: cp -v "resources/${BIN_PRO_RES_NAME}.desktop" "${QIF_PACKAGE_URI}";
+cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.png" "${QIF_PACKAGE_URI}/data";
+cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.svg" "${QIF_PACKAGE_URI}/data";
+cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.ico" "${QIF_PACKAGE_URI}/data";
+rsync -Ravr "${TRAVIS_BUILD_DIR}/usr/share/icons" "${QIF_PACKAGE_URI}/icons";
+ls "${QIF_PACKAGE_URI}/icons";
 ls; 
 # 
 echo "Running Qt Installer Framework";
