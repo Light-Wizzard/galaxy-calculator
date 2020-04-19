@@ -54,7 +54,6 @@ before_install:
     - if [ -z "${GITHUB_EMAIL+x}" ]; then echo -e "Add GITHUB_EMAIL to your Travis Settings Environment Variable with your Github email address"; exit 1; fi    
     - if [ -z "${GITHUB_USERNAME+x}" ] || [ -z "${GITHUB_PROJECT}" ]; then  
             OLD_IFS="$IFS"; IFS='/'; read -ra repo_parts <<< "$TRAVIS_REPO_SLUG"; IFS="$OLD_IFS";
-            declare -x GITHUB_USERNAME;          declare -x GITHUB_PROJECT;
             GITHUB_USERNAME="${repo_parts[0]}";  GITHUB_PROJECT="${repo_parts[1]}";
       fi
 
@@ -72,13 +71,10 @@ install:
             echo "Error /opt/${QTV}/bin/${QTV}-env.sh Not found!"
             ls /opt/;
         fi
-        declare -x LINUX_DEPLOY_APP_IMAGE_ARCH; LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  
-        declare -x LINUX_DEPLOY_APP_ZSYNC_ARCH; LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
-        declare -x ARTIFACT_APPIMAGE;           ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  
-        declare -x ARTIFACT_ZSYNC;              ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
-        declare -x ARTIFACT_QIF;                ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
-        export LINUX_DEPLOY_APP_IMAGE_ARCH;     export LINUX_DEPLOY_APP_ZSYNC_ARCH;
-        export ARTIFACT_APPIMAGE;               export ARTIFACT_ZSYNC;
+        ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}-x86_64.AppImage";
+        ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}-x86_64.AppImage.zsync";
+        ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
+        export ARTIFACT_APPIMAGE; export ARTIFACT_ZSYNC; export ARTIFACT_QIF;
       fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
