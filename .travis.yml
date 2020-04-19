@@ -59,7 +59,7 @@ before_install:
       fi
 
 install:
-    - if [ -n "${APPIMAGE}" ]; then source tools/install-qt.sh "${QT_BEINERI_VERSION}"; fi
+    - if [ -n "${APPIMAGE}" ]; then bash tools/install-qt.sh "${QT_BEINERI_VERSION}"; fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";
         brew update > /dev/null; 
@@ -71,10 +71,14 @@ install:
 script:
     - eval "${MATRIX_EVAL}"
     - if [ -n "${APPIMAGE}" ]; then 
-        declare -g ARTIFACT_APPIMAGE;
-        declare -g ARTIFACT_ZSYNC;
-        declare -g ARTIFACT_QIF;
-        source tools/build-with-qmake.sh; 
+        declare -x LINUX_DEPLOY_APP_IMAGE_ARCH; LINUX_DEPLOY_APP_IMAGE_ARCH="-x86_64.AppImage";  
+        declare -x LINUX_DEPLOY_APP_ZSYNC_ARCH; LINUX_DEPLOY_APP_ZSYNC_ARCH="-x86_64.AppImage.zsync";
+        declare -x ARTIFACT_APPIMAGE;           ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_IMAGE_ARCH}";  
+        declare -x ARTIFACT_ZSYNC;              ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}${LINUX_DEPLOY_APP_ZSYNC_ARCH}";
+        declare -x ARTIFACT_QIF;                ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
+        export LINUX_DEPLOY_APP_IMAGE_ARCH;     export LINUX_DEPLOY_APP_ZSYNC_ARCH;
+        export ARTIFACT_APPIMAGE;               export ARTIFACT_ZSYNC;
+        bash tools/build-with-qmake.sh; 
       fi
     - if [ -n "${DMG}" ]; then
         echo "Build project for Mac in /home/travis/build/[secure]/${BIN_PRO_RES_NAME}";
