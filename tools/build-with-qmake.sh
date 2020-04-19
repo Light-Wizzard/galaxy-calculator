@@ -123,19 +123,14 @@ if [ -f "${TRAVIS_BUILD_DIR}/${ARTIFACT_APPIMAGE}" ]; then
 else
     echo -e "${WARNING_COLOR}Missing ${BUILD_DIR}/${ARTIFACT_APPIMAGE} ${NC}";
 fi
-
 # The packages/${QIF_PACKAGE_URI}/meta/installscript.qs creates this: cp -v "resources/${BIN_PRO_RES_NAME}.desktop" "${QIF_PACKAGE_URI}";
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.png" "${QIF_PACKAGE_URI}/data";
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.svg" "${QIF_PACKAGE_URI}/data";
 cp -v "${TRAVIS_BUILD_DIR}/resources/${BIN_PRO_RES_NAME}.ico" "${QIF_PACKAGE_URI}/data";
-rsync -Ravr "${TRAVIS_BUILD_DIR}/usr/share/icons" "${QIF_PACKAGE_URI}/icons";
-ls "${QIF_PACKAGE_URI}/icons";
-ls; 
 # 
 echo "Running Qt Installer Framework";
 ./qtinstallerframework/binarycreator -c "${TRAVIS_BUILD_DIR}/config/config.xml" -p "${TRAVIS_BUILD_DIR}/packages" "${ARTIFACT_QIF}";
-ls;
 #
-echo "Completed build-with-qmake.sh";
+echo "{WARNING_COLOR}Completed build-with-qmake.sh${NC}";
 if [ "${DEBUGGING}" -eq 1 ]; then set +x; fi
 ################################ End of File ##################################

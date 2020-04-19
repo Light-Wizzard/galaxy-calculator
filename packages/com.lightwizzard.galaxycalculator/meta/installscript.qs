@@ -48,8 +48,8 @@ Component.prototype.createOperations = function()
     */   
     if (systemInfo.kernelType === "linux")
     {
-	    component.addOperation( "InstallIcons", "@TargetDir@/icons" );
-        component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator.desktop", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@/icons\nName[en_US]=Galaxy-Calculator.desktop");
+	    component.addOperation( "InstallIcons", "@TargetDir@" );
+        component.addOperation("CreateDesktopEntry", "@TargetDir@/Galaxy-Calculator.desktop", "Version=1.0\nType=Application\nTerminal=false\nExec=@TargetDir@/Galaxy-Calculator-x86_64.AppImage\nName=Galaxy-Calculator\nIcon=@TargetDir@/Galaxy-Calculator\nName[en_US]=Galaxy-Calculator.desktop");
         component.addElevatedOperation("Copy", "@TargetDir@/Galaxy-Calculator.desktop", "@HomeDir@/Desktop/Galaxy-Calculator.desktop");
     }
 } // end createOperations
