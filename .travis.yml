@@ -68,7 +68,7 @@ install:
         export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}-x86_64.AppImage.zsync"; 
         export ARTIFACT_APPIMAGE_LDQT="${BIN_PRO_RES_NAME}-travis-x86_64.AppImage"; 
         export ARTIFACT_ZSYNC_LDQT="${BIN_PRO_RES_NAME}-travis-x86_64.AppImage.zsync"; 
-        export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
+        export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Linux-Installer";
       fi
     - if [ -n "${DMG}" ]; then 
         echo "Download last version of Qt with brew for Mac";

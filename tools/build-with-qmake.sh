@@ -44,7 +44,7 @@ fi
 #
 export ARTIFACT_APPIMAGE="${BIN_PRO_RES_NAME}-x86_64.AppImage";
 export ARTIFACT_ZSYNC="${BIN_PRO_RES_NAME}-x86_64.AppImage.zsync";
-export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Installer";
+export ARTIFACT_QIF="${BIN_PRO_RES_NAME}-Linux-Installer";
 # 
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
 declare TEMP_BASE;
