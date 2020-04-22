@@ -103,9 +103,9 @@ after_build:
   # Add a link to the build output within the source directory. This is needed because AppVeyor does
   # not support extracting artifacts from out-of-source build directories. See 'artifacts' below.
   - echo after_build
+  - cd %APPVEYOR_BUILD_FOLDER%
   - echo Current Path is %cd%
-  #- dir
-  - dir /b /s *.exe
+  - dir
   - mkdir deploy
   - copy "%APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\%BIN%.exe" "deploy\%BIN%.exe"
   - windeployqt --qmldir "%APPVEYOR_BUILD_FOLDER%/qml" --%CONFIGURATION% "deploy/%BIN%.exe" --verbose=2
@@ -113,19 +113,10 @@ after_build:
   - 7z a -tzip "%BIN%-%CONFIGURATION%.zip" deploy -r
   - copy "%APPVEYOR_BUILD_FOLDER%-build\%BIN%-%CONFIGURATION%.zip" "%APPVEYOR_BUILD_FOLDER%\%BIN%-%CONFIGURATION%.zip"
   - echo APPVEYOR_BUILD_FOLDER=%APPVEYOR_BUILD_FOLDER%
-  - if exist C:\projects\ (echo C:\projects exists)
-  - if exist C:\projects\ (dir )
-  - if exist C:\projects\ (dir C:\projects\)
-  - if exist C:\projects\ (dir "%APPVEYOR_BUILD_FOLDER%-build\")
-  - if exist C:\projects\ (dir "%APPVEYOR_BUILD_FOLDER%-build\deploy\")
-  - if exist C:\Qt\QtIFW-3.0.1\ (dir C:\Qt\QtIFW-3.0.1)
-  - if exist C:\Qt\QtIFW-3.0.1\bin\ (dir C:\Qt\QtIFW-3.0.1\bin\)
-  - if exist C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe (echo C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe exists) else (echo C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe does not exists)
   - xcopy /s /e /f "%APPVEYOR_BUILD_FOLDER%-build\deploy" "%APPVEYOR_BUILD_FOLDER%\%QIF_PACKAGE_URI%"
   - C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe --offline-only -c "%APPVEYOR_BUILD_FOLDER%\config\config.xml" -p "%APPVEYOR_BUILD_FOLDER%\packages" "%BIN%-Windows-Installer.exe"
   - 7z a -tzip "%BIN%-Windows-Installer.zip" "%BIN%-Windows-Installer.exe"
-  - dir /b /s *.zip
-  - dir /b /s *.exe
+  - echo Current Path is %cd%
   - dir
   - echo Completed-Build
   

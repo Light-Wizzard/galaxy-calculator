@@ -30,8 +30,9 @@ Windows: [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/j
 ## :package: **Downloads:**
  - :penguin: [Linux](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-x86_64.AppImage)
  - :penguin: :inbox_tray: [Linux ZSync](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-x86_64.AppImage.zsync)
- - :penguin: :outbox_tray: [Linux Installer in work](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Installer)
+ - :penguin: :outbox_tray: [Linux Installer in work](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Linux-Installer)
  - :office: [Windows](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/galaxy-calculator_release.zip)
+ - :office: :outbox_tray: [Windows Installer in work](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Windows-Installer.exe)
  - :apple: [Apple](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator.dmg)
 
 The builds are here:
