@@ -103,8 +103,6 @@ after_build:
   # Add a link to the build output within the source directory. This is needed because AppVeyor does
   # not support extracting artifacts from out-of-source build directories. See 'artifacts' below.
   - echo after_build
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - echo Current Path is %cd%
   - dir
   - mkdir deploy
   - copy "%APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\%BIN%.exe" "deploy\%BIN%.exe"
