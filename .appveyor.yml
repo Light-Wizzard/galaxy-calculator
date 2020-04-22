@@ -131,13 +131,6 @@ artifacts:
 deploy:
   - provider: GitHub
     release: continuous
-    artifact: 'Zip-%CONFIGURATION%'
-    draft: false
-    prerelease: true
-    auth_token:
-      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
-  - provider: GitHub
-    release: continuous
     artifact: 'ZipInstaller'
     draft: false
     prerelease: true
