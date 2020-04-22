@@ -114,14 +114,17 @@ after_build:
   - xcopy /s /e /f "%APPVEYOR_BUILD_FOLDER%-build\deploy" "%APPVEYOR_BUILD_FOLDER%\%QIF_PACKAGE_URI%"
   - C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe --offline-only -c "%APPVEYOR_BUILD_FOLDER%\config\config.xml" -p "%APPVEYOR_BUILD_FOLDER%\packages" "%BIN%-Windows-Installer.exe"
   - 7z a -tzip "%BIN%-Windows-Installer.zip" "%BIN%-Windows-Installer.exe"
-  - copy *.zip ..\;
-  - copy *.exe ..\;
+  - copy *.zip ..\
+  - copy *.exe ..\
+  - cd ..\
   - del %APPVEYOR_BUILD_FOLDER%\%BIN%.pro
   - echo Current Path is %cd%
   - dir
   - echo Completed-Build
   
 artifacts:
+  - dir
+  - echo Current Path is %cd%
   - path: '%BIN%*.*'
     name: 'DeployAll'
 #    name: 'Zip-%CONFIGURATION%'
