@@ -31,8 +31,9 @@ Windows: [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/j
  - :penguin: [Linux](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-x86_64.AppImage)
  - :penguin: :inbox_tray: [Linux ZSync](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-x86_64.AppImage.zsync)
  - :penguin: :outbox_tray: [Linux Installer in work](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Linux-Installer)
- - :office: [Windows](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/galaxy-calculator_release.zip)
- - :office: :outbox_tray: [Windows Installer in work](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Windows-Installer.exe)
+ - :office: [Windows zip exe](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/galaxy-calculator_release.zip)
+ - :office: :outbox_tray: [Windows Installer exe](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Windows-Installer.exe)
+ - :office: :outbox_tray: [Windows Installer zip](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator-Windows-Installer.zip)
  - :apple: [Apple](https://github.com/Light-Wizzard/galaxy-calculator/releases/download/continuous/Galaxy-Calculator.dmg)
 
 The builds are here:
@@ -49,13 +50,6 @@ These are other versions of the program that I made by hand:
 
 Linux: to use zsync you must have it installed. 
 Note, I need to update to version 2 for the Internet, doing that now.
-
-```
-# Arch Linux or Manjaro
-sudo pacman --noconfirm --needed -S zsync
-# Ubunto, LMDE, Debian...
-sudo apt install zsync
-```
 
 I plan to support as much as I can, once my Book or ePubs start to sell, I will save up for a Mac, and iOS device, so I can make Installers for them.
 
