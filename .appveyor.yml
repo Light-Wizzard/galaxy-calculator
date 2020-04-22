@@ -114,9 +114,9 @@ after_build:
   - xcopy /s /e /f "%APPVEYOR_BUILD_FOLDER%-build\deploy" "%APPVEYOR_BUILD_FOLDER%\%QIF_PACKAGE_URI%"
   - C:\Qt\QtIFW-3.0.1\bin\binarycreator.exe --offline-only -c "%APPVEYOR_BUILD_FOLDER%\config\config.xml" -p "%APPVEYOR_BUILD_FOLDER%\packages" "%BIN%-Windows-Installer.exe"
   - 7z a -tzip "%BIN%-Windows-Installer.zip" "%BIN%-Windows-Installer.exe"
-  - copy *.zip ..\
-  - copy *.exe ..\
-  - cd ..\
+  - copy *.zip ..\%APPVEYOR_BUILD_FOLDER%
+  - copy *.exe ..\%APPVEYOR_BUILD_FOLDER%
+  - cd %APPVEYOR_BUILD_FOLDER%
   - del %APPVEYOR_BUILD_FOLDER%\%BIN%.pro
   - echo Current Path is %cd%
   - dir
