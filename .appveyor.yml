@@ -123,41 +123,31 @@ after_build:
   - echo Completed-Build
   
 artifacts:
-  - path: '%BIN%*.*'
-    name: 'DeployAll'
-#    name: 'Zip-%CONFIGURATION%'
-#  - path: '%BIN%-Windows-Installer.zip'  
-#    name: 'ZipInstaller'
-#  - path: '%BIN%-Installer.exe'
-#    name: 'ExecutableFile'
+  - path: '%BIN%*.zip'  
+    name: 'ZipInstaller'
+  - path: '%BIN%*.exe'
+    name: 'ExecutableFile'
 
 deploy:
   - provider: GitHub
     release: continuous
-    artifact: 'DeployAll'
+    artifact: 'Zip-%CONFIGURATION%'
     draft: false
     prerelease: true
     auth_token:
       secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
-#  - provider: GitHub
-#    release: continuous
-#    artifact: 'Zip-%CONFIGURATION%'
-#    draft: false
-#    prerelease: true
-#    auth_token:
-#      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
-#  - provider: GitHub
-#    release: continuous
-#    artifact: 'ZipInstaller'
-#    draft: false
-#    prerelease: true
-#    auth_token:
-#      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
-#  - provider: GitHub
-#    release: continuous
-#    artifact: 'ExecutableFile'
-#    draft: false
-#    prerelease: true
-#    auth_token:
-#      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
+  - provider: GitHub
+    release: continuous
+    artifact: 'ZipInstaller'
+    draft: false
+    prerelease: true
+    auth_token:
+      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
+  - provider: GitHub
+    release: continuous
+    artifact: 'ExecutableFile'
+    draft: false
+    prerelease: true
+    auth_token:
+      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
 ############################################## End of File ####################
