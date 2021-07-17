@@ -135,12 +135,12 @@ deploy:
     draft: false
     prerelease: true
     auth_token:
-      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
+      secure: $env:APP_ENV_SECURE
   - provider: GitHub
     release: continuous
     artifact: 'ExecutableFile'
     draft: false
     prerelease: true
     auth_token:
-      secure: zhMbBtnPhVjygBTfOpQniE0jUPWOLewzUCFmEQIqZ/VSfFGpdzh+ZPeDU03rP1yD
+      secure: $env:APP_ENV_SECURE
 ############################################## End of File ####################
